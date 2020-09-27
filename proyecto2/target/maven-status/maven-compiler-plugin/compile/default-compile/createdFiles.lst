@@ -1,0 +1,4 @@
+com/mycompany/proyecto2/Objects/Medic.class
+com/mycompany/proyecto2/AdminControlers/AdminDB.class
+com/mycompany/proyecto2/DBControlers/ConnectionDB.class
+com/mycompany/proyecto2/DBControlers/LoadXml.class
