@@ -27,6 +27,11 @@
         <%} else {%>
             <%LoadXml loadxml = new LoadXml();%>
             <%loadxml.chooseFileXML();%>
+            <form METHOD="POST" ACTION="newjsp.jsp">
+            <center>
+            <input type="submit" value="Ver imagen" />
+            </center>
+            </form>
         <%}%>
     </body>
 </html>
