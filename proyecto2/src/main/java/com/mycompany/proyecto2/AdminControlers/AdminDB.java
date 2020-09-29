@@ -6,7 +6,7 @@
 package com.mycompany.proyecto2.AdminControlers;
 
 import com.mycompany.proyecto2.DBControlers.ConnectionDB;
-import com.mycompany.proyecto2.Objects.encryptPassword;
+import com.mycompany.proyecto2.Utils.encryptPassword;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

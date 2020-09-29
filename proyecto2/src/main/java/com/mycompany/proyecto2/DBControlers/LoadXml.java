@@ -329,7 +329,7 @@ public class LoadXml {
     }
     
     /**
-     *This method is used to read and the exams the patients from the xml file
+     *This method is used to read and the exams from the xml file
      * @param listExams
      */
     public void insertExams(NodeList listExams){
@@ -357,7 +357,11 @@ public class LoadXml {
         }
     }
     
-    
+    /**
+     *This method is used to read and the results from the xml file
+     * @param listResults
+     * @param pathFolder
+     */
     public void insertResults(NodeList listResults, String pathFolder){       
         LabWorkerDB labDB = new LabWorkerDB();
         try{
@@ -393,6 +397,10 @@ public class LoadXml {
         }                
     }
         
+    /**
+     *This method is used to read and the appointments from the xml file
+     * @param listAppointments
+     */
     public void insertAppointments(NodeList listAppointments){
         PatientDB patientDB = new PatientDB();
         AdminDB admin = new AdminDB();        
@@ -420,6 +428,10 @@ public class LoadXml {
         }
     }
     
+    /**
+     *This method is used to read and the constultations from the xml file
+     * @param listConsultations
+     */
     public void insertConsultations(NodeList listConsultations){
         AdminDB admin = new AdminDB();
         try{
