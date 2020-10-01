@@ -1,0 +1,14 @@
+
+
+.titulo{
+    color: #2c21f4;
+    text-align: center;
+    font-weight: bold; 
+}
+
+.table, td, th{
+   border:1px solid black;    
+}
+.table{
+    border-collapse:collapse;
+}

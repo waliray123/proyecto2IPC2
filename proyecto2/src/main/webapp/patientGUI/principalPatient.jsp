@@ -1,8 +1,4 @@
-<%-- 
-    Document   : principalMedic
-    Created on : 28/09/2020, 23:42:38
-    Author     : user-ubunto
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,6 +8,21 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%String namePatient = request.getParameter("username");%>
         <h1>Pagina principal paciente</h1>
+        <div>
+            <form METHOD="POST" ACTION="patientGUI/makeAppointment.jsp">
+                <h3> Agendar Consulta </h3>
+                <input type="submit" value="Agendar Consulta" />
+                <input type="hidden" value="<%=namePatient%>" name="codePatient">
+            </form>
+        </div>   
+        <div>
+            <form METHOD="POST" ACTION="patientGUI/reviewAppointments.jsp">
+                <h3> Ver mis citas y examenes pendientes </h3>
+                <input type="submit" value="Ver citas" />
+                <input type="hidden" value="<%=namePatient%>" name="codePatient">
+            </form>
+        </div>    
     </body>
 </html>

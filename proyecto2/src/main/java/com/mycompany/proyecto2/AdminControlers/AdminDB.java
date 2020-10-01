@@ -10,6 +10,7 @@ import com.mycompany.proyecto2.Utils.encryptPassword;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -217,5 +218,107 @@ public class AdminDB {
         return codeExam;
     }
     
+    public String searchCodeExamByCode(String code){
+        String codeExam= "";                
+        try {            
+            ps = connection.prepareStatement("SELECT code FROM EXAM WHERE code = ?");
+            ps.setString(1, code);                       
+            rs = ps.executeQuery();            
+            if (rs.next()){
+                codeExam = rs.getString(1);
+            }            
+        } catch (Exception e) {
+            
+        }
+        return codeExam;
+    }
     
+    public String searchCodeMedicByCode(String code){
+        String codeMedic= "";                
+        try {            
+            ps = connection.prepareStatement("SELECT code FROM MEDIC WHERE code = ?");
+            ps.setString(1, code);                       
+            rs = ps.executeQuery();            
+            if (rs.next()){
+                codeMedic = rs.getString(1);
+            }            
+        } catch (Exception e) {
+            
+        }
+        return codeMedic;
+    }
+    
+    public String searchCodeLabWorkerByCode(String code){
+        String codeLabWorker= "";                
+        try {            
+            ps = connection.prepareStatement("SELECT code FROM LAB_WORKER WHERE code = ?");
+            ps.setString(1, code);                       
+            rs = ps.executeQuery();            
+            if (rs.next()){
+                codeLabWorker = rs.getString(1);
+            }            
+        } catch (Exception e) {
+            
+        }
+        return codeLabWorker;
+    }
+    
+    public String[] searchConsultationByType(String type){
+        String[] consultation= new String[3];
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM CONSULTATION WHERE type = ?");
+            ps.setString(1, type);                       
+            rs = ps.executeQuery();            
+            if (rs.next()){
+                consultation[0] = rs.getString(1);
+                consultation[1] = rs.getString(2);
+                consultation[2] = rs.getString(3);
+            }            
+        } catch (Exception e) {
+            
+        }
+        return consultation;
+    }
+    
+    
+    public ArrayList<String> getAllSpecialties(){
+        ArrayList<String> specialties = new ArrayList<String>();
+        try {            
+            ps = connection.prepareStatement("SELECT name FROM SPECIALTY");
+            rs = ps.executeQuery();            
+            while (rs.next()){
+                specialties.add(rs.getString(1));
+            }            
+        } catch (Exception e) {
+            
+        }
+        return specialties;
+    }
+    
+    public ArrayList<String> getAllExams(){
+        ArrayList<String> exams = new ArrayList<String>();
+        try {            
+            ps = connection.prepareStatement("SELECT name FROM EXAM");
+            rs = ps.executeQuery();            
+            while (rs.next()){
+                exams.add(rs.getString(1));
+            }            
+        } catch (Exception e) {
+            
+        }
+        return exams;
+    }
+    
+    public void updateConsultationByCode(String code, String cost){
+        try {
+            ps = connection.prepareStatement("UPDATE CONSULTATION SET cost = ? WHERE code = ?");
+            ps.setString(1, cost);
+            ps.setString(2, code);
+            
+            ps.executeUpdate();//action done
+            
+        } catch (Exception e) {
+            
+        }
+    }
 }

@@ -6,10 +6,15 @@
 package com.mycompany.proyecto2.PatientControlers;
 
 import com.mycompany.proyecto2.DBControlers.ConnectionDB;
+import com.mycompany.proyecto2.Utils.Appointment;
+import com.mycompany.proyecto2.Utils.Medic;
 import com.mycompany.proyecto2.Utils.encryptPassword;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Time;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -50,4 +55,105 @@ public class PatientDB {
         }
     }
     
+   public ArrayList<Medic> getAllMedics(){
+       ArrayList<Medic> medics = new ArrayList<Medic>();
+       try {            
+            ps = connection.prepareStatement("SELECT * FROM MEDIC ORDER BY code");
+            rs = ps.executeQuery();
+            
+            while(rs.next()){                
+                String code = rs.getString(1);
+                String name= rs.getString(2);
+                String collegiate= rs.getString(3);
+                String DPI= rs.getString(4);
+                String phone= rs.getString(5);
+                String mail= rs.getString(6);
+                String initTime= rs.getString(8);
+                String finalTime= rs.getString(9);
+                String initWork= rs.getString(10);
+                Medic temporalMedic = new Medic(code,name,collegiate,DPI,phone,mail,initTime,finalTime,initWork);
+                ArrayList<String> specialties = getAllSpecialtiesByCodeMedic(code);
+                temporalMedic.setSpecialties(specialties);
+                medics.add(temporalMedic);                
+            }            
+        } catch (Exception e) {
+            
+        }
+       return medics;
+   }
+    
+   public ArrayList<String> getAllSpecialtiesByCodeMedic(String codeMedic){
+       
+       ArrayList<String> specialties = new ArrayList<String>();
+       try {            
+            ps = connection.prepareStatement("SELECT s.code,s.name, m.name FROM (MEDIC AS m,SPECIALTY AS s,SPECIALTY_MEDIC AS sm) WHERE m.code = ? AND sm.SPECIALTY_code = s.code AND sm.MEDIC_code = m.code;");
+            ps.setString(1, codeMedic);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String name = res.getString(2);
+                specialties.add(name);
+            }            
+        } catch (Exception e) {
+            
+        }
+       return specialties;
+   }
+   
+    public ArrayList<Appointment> getAppointmentsMedicByDate(String codeMedic,String dateAppointment){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM APPOINTMENT WHERE MEDIC_code = ? AND date_Appointment = ?");
+            ps.setString(1, codeMedic);
+            ps.setString(2, dateAppointment);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);
+                String date = res.getString(2);
+                String time = res.getString(3);
+                String codePatient = res.getString(4);                
+                String codeSpecialty = res.getString(6);
+                Appointment appointment = new Appointment(code,date,time,codePatient,codeMedic,codeSpecialty);
+                appointments.add(appointment);
+            }            
+        } catch (Exception e) {
+            
+        }
+        return appointments;
+    }
+    
+    public boolean verifyIsMedicFreeByTime(Time time, String codeMedic){        
+        boolean isFree = false;
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM MEDIC AS m WHERE ? between m.initTime and m.finalTime AND m.code = ?");
+            ps.setTime(1, time);
+            ps.setString(2, codeMedic);
+            ResultSet res = ps.executeQuery();            
+            if (res.next()){
+                isFree = true;
+            }            
+        } catch (Exception e) {
+            
+        }
+        return isFree;
+    }
+    
+    public String getLastCodeAppointment(){
+        String lastCode = "";
+        try {            
+            ps = connection.prepareStatement("SELECT code FROM APPOINTMENT ORDER BY code DESC;");
+            ResultSet res = ps.executeQuery();            
+            if (res.next()){
+                lastCode = res.getString(1);
+            }            
+        } catch (Exception e) {
+            
+        }
+        return lastCode;
+    }
+    
+    public ArrayList<Appointment> getAppointmentsByCodePatient(String codePatient){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+        
+        return appointments;
+    }
 }
