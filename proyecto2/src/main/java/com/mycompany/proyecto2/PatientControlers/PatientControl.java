@@ -8,6 +8,7 @@ package com.mycompany.proyecto2.PatientControlers;
 import com.mycompany.proyecto2.AdminControlers.AdminDB;
 import com.mycompany.proyecto2.Utils.Appointment;
 import com.mycompany.proyecto2.Utils.Medic;
+import com.mycompany.proyecto2.Utils.Result;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -82,5 +83,15 @@ public class PatientControl {
             }
         }
         return complete;
+    }
+    
+    public ArrayList<Appointment> getAppointmentsByCodePatientAndDate(String date, String codePatient){
+        ArrayList<Appointment> appointments = patientDB.getAppointmentsByCodePatientBeforeDate(date, codePatient);
+        return appointments;
+    }
+    
+    public ArrayList<Result> getResultsPendingByCodePatient(String codePatient){
+        ArrayList<Result> results = patientDB.getResultPendingByCodePatient(codePatient);
+        return results;
     }
 }

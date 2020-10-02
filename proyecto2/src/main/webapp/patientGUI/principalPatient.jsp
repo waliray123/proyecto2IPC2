@@ -13,7 +13,7 @@
         <div>
             <form METHOD="POST" ACTION="patientGUI/makeAppointment.jsp">
                 <h3> Agendar Consulta </h3>
-                <input type="submit" value="Agendar Consulta" />
+                <input type="submit" value="Agendar Cita" />
                 <input type="hidden" value="<%=namePatient%>" name="codePatient">
             </form>
         </div>   
@@ -23,6 +23,13 @@
                 <input type="submit" value="Ver citas" />
                 <input type="hidden" value="<%=namePatient%>" name="codePatient">
             </form>
-        </div>    
+        </div> 
+        <div>
+            <form METHOD="POST" ACTION="patientGUI/sheduleExam.jsp">
+                <h3> Agendar Examen de Laboratorio </h3>
+                <input type="submit" value="Agendar Examen" />
+                <input type="hidden" value="<%=namePatient%>" name="codePatient">
+            </form>
+        </div> 
     </body>
 </html>

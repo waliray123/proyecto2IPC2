@@ -8,7 +8,10 @@ package com.mycompany.proyecto2.PatientControlers;
 import com.mycompany.proyecto2.DBControlers.ConnectionDB;
 import com.mycompany.proyecto2.Utils.Appointment;
 import com.mycompany.proyecto2.Utils.Medic;
+import com.mycompany.proyecto2.Utils.Result;
 import com.mycompany.proyecto2.Utils.encryptPassword;
+import java.io.File;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -114,7 +117,8 @@ public class PatientDB {
                 String codeSpecialty = res.getString(6);
                 Appointment appointment = new Appointment(code,date,time,codePatient,codeMedic,codeSpecialty);
                 appointments.add(appointment);
-            }            
+            }
+            res.close();
         } catch (Exception e) {
             
         }
@@ -131,6 +135,7 @@ public class PatientDB {
             if (res.next()){
                 isFree = true;
             }            
+            res.close();
         } catch (Exception e) {
             
         }
@@ -143,17 +148,61 @@ public class PatientDB {
             ps = connection.prepareStatement("SELECT code FROM APPOINTMENT ORDER BY code DESC;");
             ResultSet res = ps.executeQuery();            
             if (res.next()){
-                lastCode = res.getString(1);
-            }            
+                lastCode = res.getString(1);                
+            }         
+            res.close();
         } catch (Exception e) {
             
         }
         return lastCode;
     }
     
-    public ArrayList<Appointment> getAppointmentsByCodePatient(String codePatient){
+    public ArrayList<Appointment> getAppointmentsByCodePatientBeforeDate(String date,String codePatient){
         ArrayList<Appointment> appointments = new ArrayList<Appointment>();
-        
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM APPOINTMENT WHERE date_Appointment >= ? AND PATIENT_code = ?");
+            ps.setString(1, date);
+            ps.setString(2, codePatient);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);
+                String dateAppointment = res.getString(2);
+                String time = res.getString(3);
+                String codeMedic = res.getString(5);                
+                String codeSpecialty = res.getString(6);
+                Appointment appointment = new Appointment(code,dateAppointment,time,codePatient,codeMedic,codeSpecialty);
+                appointments.add(appointment);               
+            }         
+            res.close();
+        } catch (Exception e) {
+            
+        }
         return appointments;
+    }
+    
+    public ArrayList<Result> getResultPendingByCodePatient(String codePatient){
+         ArrayList<Result> results = new  ArrayList<Result>();
+         try {            
+            ps = connection.prepareStatement("SELECT * FROM RESULT WHERE PATIENT_code = ? AND LAB_WORKER_code = null;");
+            ps.setString(1, codePatient);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);
+                Blob order_Result = res.getBlob(2);
+                Blob inform = res.getBlob(3);
+                String date = res.getString(4);
+                String time = res.getString(5);
+                String codeLabWorker = res.getString(6);
+                String codePatient2 = res.getString(7);
+                String codeMedic = res.getString(8);
+                String codeExam = res.getString(9);
+                Result tempResult = new Result(code,order_Result,inform,date,time,codeLabWorker,codePatient2,codeMedic,codeExam);
+                results.add(tempResult);               
+            }         
+            res.close();
+        } catch (Exception e) {
+            
+        }         
+         return results;
     }
 }

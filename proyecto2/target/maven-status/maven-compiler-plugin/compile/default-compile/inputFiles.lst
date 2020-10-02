@@ -2,12 +2,16 @@
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/LabWorkerControlers/LabWorkerDB.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/DBControlers/LoadXml.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Utils/Medic.java
+/home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/DBControlers/RegularConsultations.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/AdminControlers/AdminControl.java
+/home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Utils/Result.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Utils/encryptPassword.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/MedicControlers/MedicDB.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Utils/sessionUser.java
+/home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Utils/Appointment.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/DBControlers/ConnectionDB.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Servlets/LoginServlet.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/PatientControlers/PatientDB.java
+/home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/MedicControlers/MedicControl.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/AdminControlers/AdminDB.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/PatientControlers/PatientControl.java
