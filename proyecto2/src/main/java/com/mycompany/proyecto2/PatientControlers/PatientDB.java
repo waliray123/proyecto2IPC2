@@ -7,10 +7,12 @@ package com.mycompany.proyecto2.PatientControlers;
 
 import com.mycompany.proyecto2.DBControlers.ConnectionDB;
 import com.mycompany.proyecto2.Utils.Appointment;
+import com.mycompany.proyecto2.Utils.Exam;
 import com.mycompany.proyecto2.Utils.Medic;
 import com.mycompany.proyecto2.Utils.Result;
 import com.mycompany.proyecto2.Utils.encryptPassword;
 import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 
 /**
@@ -204,5 +207,74 @@ public class PatientDB {
             
         }         
          return results;
+    }
+    
+    public ArrayList<Exam> getAllExams(){
+        ArrayList<Exam> exams = new ArrayList<Exam>();
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM EXAM");
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);
+                String name = res.getString(2);
+                boolean useOrder = res.getBoolean(3);
+                String description= res.getString(4);
+                Double cost = res.getDouble(5);
+                String reportType= res.getString(6);
+                Exam tempResult = new Exam(code,name,useOrder,description,cost,reportType);
+                exams.add(tempResult);               
+            }         
+            res.close();
+        } catch (Exception e) {
+            
+        }        
+        return exams;      
+    }
+    
+    public String getLastResult(){
+        String lastResult = "";
+        ArrayList<Integer> codesResults = new ArrayList<Integer>();
+        try {            
+                ps = connection.prepareStatement("SELECT code FROM RESULT;");
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                int code = Integer.parseInt(res.getString(1));
+                codesResults.add(code);
+            }
+            res.close();
+        } catch (Exception e) {
+            
+        }
+        Collections.sort(codesResults);
+        int size = codesResults.size();        
+        lastResult = String.valueOf(codesResults.get(size-1)+1);
+        return lastResult;
+    }
+    
+    public void insertResultByPatient(String code, File orderResult, String codePatient, String codeMedic, String codeExam){                
+        try {
+            ps = connection.prepareStatement("INSERT INTO RESULT (code, order_result, PATIENT_code, MEDIC_code, EXAM_code)VALUES (?,?,?,?,?)");
+            FileInputStream order;
+            if (orderResult == null) {
+                order = null;
+                 ps.setBinaryStream(2, null);
+            }else{
+                order = new FileInputStream(orderResult);                            
+                ps.setBinaryStream(2, order, (int)orderResult.length());
+            }
+            if (codeMedic.equals("")) {
+                codeMedic = null;
+            }
+            
+            ps.setString(1, code);
+            ps.setString(3, codePatient);
+            ps.setString(4, codeMedic);
+            ps.setString(5, codeExam);
+                        
+            ps.executeUpdate();//action done
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error Result EN BASE DE DATOS", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

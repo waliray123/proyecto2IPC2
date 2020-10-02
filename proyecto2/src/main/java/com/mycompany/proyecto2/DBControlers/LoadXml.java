@@ -343,12 +343,18 @@ public class LoadXml {
                     
                     String code = element.getElementsByTagName("CODIGO").item(0).getTextContent();
                     String name = element.getElementsByTagName("NOMBRE").item(0).getTextContent();
-                    boolean order = Boolean.getBoolean(element.getElementsByTagName("ORDEN").item(0).getTextContent().toLowerCase());
+                    String order = element.getElementsByTagName("ORDEN").item(0).getTextContent();
+                    boolean useOrder;
+                    if (order.equalsIgnoreCase("true")) {
+                        useOrder = true;
+                    }else{
+                        useOrder = false;
+                    }
                     String description = element.getElementsByTagName("DESCRIPCION").item(0).getTextContent();
                     double cost = Double.valueOf(element.getElementsByTagName("COSTO").item(0).getTextContent());
                     String inform = element.getElementsByTagName("INFORME").item(0).getTextContent();
                     
-                    admin.insertTypeExam(code, name, order, description, cost, inform);
+                    admin.insertTypeExam(code, name, useOrder, description, cost, inform);
                 }
                 
             }

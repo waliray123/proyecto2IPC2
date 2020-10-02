@@ -7,8 +7,10 @@ package com.mycompany.proyecto2.PatientControlers;
 
 import com.mycompany.proyecto2.AdminControlers.AdminDB;
 import com.mycompany.proyecto2.Utils.Appointment;
+import com.mycompany.proyecto2.Utils.Exam;
 import com.mycompany.proyecto2.Utils.Medic;
 import com.mycompany.proyecto2.Utils.Result;
+import java.io.File;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -93,5 +95,31 @@ public class PatientControl {
     public ArrayList<Result> getResultsPendingByCodePatient(String codePatient){
         ArrayList<Result> results = patientDB.getResultPendingByCodePatient(codePatient);
         return results;
+    }
+    
+    public Exam getExamByName(String typeExam){
+        Exam exam = new Exam("","",false,"",0.0,"");
+        ArrayList<Exam> exams = getAllExams();
+        for (Exam exam1 : exams) {
+            if (exam1.getName().equalsIgnoreCase(typeExam)) {
+                exam = exam1;
+                break;
+            }
+        }
+        return exam;
+    }
+    
+    public ArrayList<Exam> getAllExams(){
+        ArrayList<Exam> exams = patientDB.getAllExams();
+        return exams;
+    }
+    
+    public String getLastResult(){
+        String lastResult = patientDB.getLastResult();        
+        return lastResult;
+    }
+    
+    public void sheduleExam(String code, File orderResult, String codePatient, String codeMedic, String codeExam){
+        
     }
 }

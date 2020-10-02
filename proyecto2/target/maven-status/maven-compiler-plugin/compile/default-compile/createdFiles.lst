@@ -12,6 +12,7 @@ com/mycompany/proyecto2/DBControlers/PrivateInserts.class
 com/mycompany/proyecto2/Utils/Result.class
 com/mycompany/proyecto2/Utils/Appointment.class
 com/mycompany/proyecto2/PatientControlers/PatientControl.class
+com/mycompany/proyecto2/Utils/Exam.class
 com/mycompany/proyecto2/PatientControlers/PatientDB.class
 com/mycompany/proyecto2/Utils/Medic.class
 com/mycompany/proyecto2/DBControlers/ConnectionDB.class

@@ -18,5 +18,14 @@
                 <input type="submit" value="Ingresar" />
             </center>
         </form>        
+<!--        <form>
+            <input type="submit" value="Subir XML" name ="loadXML"/>
+        </form> -->
+        <% 
+//            if (request.getParameter("loadXML") !=null) {
+//                LoadXml load = new LoadXml();
+//                load.chooseFileXML();
+//            }
+        %>
     </body>
 </html>
