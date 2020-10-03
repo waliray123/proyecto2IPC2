@@ -13,5 +13,13 @@
     </head>
     <body>
         <h1>Pagina principal laboratorista</h1>
+        <%String codeLabWorker = request.getParameter("username");%>
+        <div>
+            <form METHOD="POST" ACTION="labWorkerGUI/setResult.jsp">
+                <h3> Entregar Examen</h3>
+                <input type="submit" value="Entregar Examen" />
+                <input type="hidden" value="<%=codeLabWorker%>" name="codeLabWorker">
+            </form>
+        </div>
     </body>
 </html>

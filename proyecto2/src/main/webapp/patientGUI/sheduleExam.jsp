@@ -44,7 +44,7 @@
                 boolean useOrder = exam.isUseOrder();
                 String codeResult = patientC.getLastResult();
         %>
-        <form>
+        <form method="post" enctype="multipart/form-data" action="/proyecto2/sheduleResult">
             <h4>Codigo de Examen</h4>  
             <%=codeResult%>
             <h4>Codigo de Paciente</h4>
@@ -66,7 +66,8 @@
             <br><input type="submit" value="Agendar Examen" name="insertResult"/>            
         </form> 
             <%}else if (request.getParameter("insertResult") != null) {
-                String codeResult = request.getParameter("");
+//                String codeResult = request.getParameter("");
+                
                 String pathInform = request.getParameter("file");
                 
 //                File informFile = ;

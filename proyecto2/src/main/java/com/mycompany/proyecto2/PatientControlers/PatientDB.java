@@ -186,7 +186,7 @@ public class PatientDB {
     public ArrayList<Result> getResultPendingByCodePatient(String codePatient){
          ArrayList<Result> results = new  ArrayList<Result>();
          try {            
-            ps = connection.prepareStatement("SELECT * FROM RESULT WHERE PATIENT_code = ? AND LAB_WORKER_code = null;");
+            ps = connection.prepareStatement("SELECT * FROM RESULT WHERE PATIENT_code = ? AND LAB_WORKER_code IS NULL;");
             ps.setString(1, codePatient);
             ResultSet res = ps.executeQuery();            
             while (res.next()){

@@ -16,3 +16,4 @@ com/mycompany/proyecto2/Utils/Exam.class
 com/mycompany/proyecto2/PatientControlers/PatientDB.class
 com/mycompany/proyecto2/Utils/Medic.class
 com/mycompany/proyecto2/DBControlers/ConnectionDB.class
+com/mycompany/proyecto2/Servlets/sheduleResult.class

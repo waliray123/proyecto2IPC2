@@ -6,14 +6,17 @@
 package com.mycompany.proyecto2.LabWorkerControlers;
 
 import com.mycompany.proyecto2.DBControlers.ConnectionDB;
+import com.mycompany.proyecto2.Utils.Result;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -66,10 +69,48 @@ public class LabWorkerDB {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error Result EN BASE DE DATOS", JOptionPane.ERROR_MESSAGE);
         }
-    }        
+    }            
     
-    public void seeImage(){
-        
+    public boolean labWorkerWorkToday(String codeLabWorker, String codeDay){
+        boolean work = false;
+        try {            
+            ps = connection.prepareStatement("SELECT l.code, l.name, dl.DAY_code FROM (LAB_WORKER as l, DAY_LABWORKER AS dl) WHERE l.code = ? AND l.code = dl.LAB_WORKER_code AND dl.DAY_code = ?");
+            ps.setString(1, codeLabWorker);
+            ps.setString(2, codeDay);
+            ResultSet res = ps.executeQuery();            
+            if (res.next()){
+                work = true;
+            }         
+            res.close();
+        } catch (Exception e) {
+            
+        }
+        return work;
+    }
+    
+    public ArrayList<Result> getAllResultsPendings(){
+        ArrayList<Result> results = new ArrayList<Result>();
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM (RESULT AS r) WHERE r.LAB_WORKER_code IS NULL;");
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);
+                Blob order_Result = res.getBlob(2);
+                Blob inform = res.getBlob(3);
+                String date = res.getString(4);
+                String time = res.getString(5);
+                String codeLabWorker = res.getString(6);
+                String codePatient2 = res.getString(7);
+                String codeMedic = res.getString(8);
+                String codeExam = res.getString(9);
+                Result tempResult = new Result(code,order_Result,inform,date,time,codeLabWorker,codePatient2,codeMedic,codeExam);
+                results.add(tempResult);               
+            }         
+            res.close();
+        } catch (Exception e) {
+            
+        }    
+        return results;
     }
 }
 
