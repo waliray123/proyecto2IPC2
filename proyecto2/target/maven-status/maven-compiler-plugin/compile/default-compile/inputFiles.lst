@@ -1,5 +1,6 @@
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/DBControlers/PrivateInserts.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/LabWorkerControlers/LabWorkerDB.java
+/home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/PatientControlers/PatientReportsDB.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/LabWorkerControlers/LabWorkerReportsDB.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/DBControlers/LoadXml.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Utils/Medic.java
@@ -12,6 +13,7 @@
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Utils/Exam.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/MedicControlers/MedicDB.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/LabWorkerControlers/LabWorkerControl.java
+/home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Utils/DateQuantity.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Utils/sessionUser.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/Utils/Appointment.java
 /home/user-ubunto/Escritorio/proyecto2/proyecto2/src/main/java/com/mycompany/proyecto2/DBControlers/ConnectionDB.java

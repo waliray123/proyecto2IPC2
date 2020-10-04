@@ -3,6 +3,7 @@ com/mycompany/proyecto2/LabWorkerControlers/LabWorkerDB.class
 com/mycompany/proyecto2/Servlets/setResultServlet.class
 com/mycompany/proyecto2/LabWorkerControlers/LabWorkerControl.class
 com/mycompany/proyecto2/DBControlers/RegularConsultations.class
+com/mycompany/proyecto2/Utils/DateQuantity.class
 com/mycompany/proyecto2/Servlets/LoginServlet.class
 com/mycompany/proyecto2/Utils/sessionUser.class
 com/mycompany/proyecto2/MedicControlers/MedicControl.class
@@ -13,6 +14,7 @@ com/mycompany/proyecto2/LabWorkerControlers/LabWorkerReportsDB.class
 com/mycompany/proyecto2/MedicControlers/MedicDB.class
 com/mycompany/proyecto2/DBControlers/PrivateInserts.class
 com/mycompany/proyecto2/Utils/Result.class
+com/mycompany/proyecto2/PatientControlers/PatientReportsDB.class
 com/mycompany/proyecto2/Utils/Appointment.class
 com/mycompany/proyecto2/PatientControlers/PatientControl.class
 com/mycompany/proyecto2/Utils/Exam.class

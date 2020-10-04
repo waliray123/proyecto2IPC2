@@ -39,13 +39,13 @@
                 <input type="hidden" value="<%=namePatient%>" name="codePatient">
                 <input type="hidden" value="1" name="report">
             </form>
-            <form METHOD="POST" ACTION="labWorkerGUI/reportsLab/report2Lab.jsp">
-                <h3>Examenes realizados en el dia</h3>
-                <input type="submit" value="Ver examenes Realizados hoy"/>
+            <form METHOD="POST" ACTION="patientGUI/reportsPatient/report2Patient.jsp">
+                <h3>Buscar examenes segun tipo  y rango de fecha</h3>
+                <input type="submit" value="Ver examenes"/>
                 <input type="hidden" value="<%=namePatient%>" name="codePatient">
                 <input type="hidden" value="2" name="report">
             </form>
-            <form METHOD="POST" ACTION="labWorkerGUI/reportsLab/report3Lab.jsp">
+            <form METHOD="POST" ACTION="patientGUI/reportsPatient/report3Patient.jsp">
                 <h3>Utilizacion de cada dia de trabajo</h3>
                 <input type="submit" value="Utilizacion de hoy"/>
                 <input type="hidden" value="<%=namePatient%>" name="codePatient">
