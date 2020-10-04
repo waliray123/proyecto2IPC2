@@ -112,5 +112,22 @@ public class LabWorkerDB {
         }    
         return results;
     }
+    
+    public void updateResult(String codeLabWorker, File inform, String dateToday, String time ,String codeResult){
+        try {
+            FileInputStream inform2;
+            inform2 = new FileInputStream(inform);                                        
+            ps = connection.prepareStatement("UPDATE RESULT SET LAB_WORKER_code  = ?, time_Result = ?, date_Result = ?, inform = ? WHERE code = ?");
+            ps.setString(1, codeLabWorker);
+            ps.setString(2, time);
+            ps.setString(3, dateToday);
+            ps.setBinaryStream(4, inform2, (int)inform.length());
+            ps.setString(5, codeResult);            
+            ps.executeUpdate();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
 }
 

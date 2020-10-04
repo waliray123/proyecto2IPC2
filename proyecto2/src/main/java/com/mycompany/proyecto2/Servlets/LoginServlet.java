@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
         } else if (type == "lab") {
             pathGUI = "/labWorkerGUI/principallabWorker.jsp";
         } else if (type == "nulo") {
-            pathGUI = "/Login.html";
+            pathGUI = "/Login.jsp";
         }
         RequestDispatcher requestDis;
         requestDis = request.getRequestDispatcher(pathGUI);

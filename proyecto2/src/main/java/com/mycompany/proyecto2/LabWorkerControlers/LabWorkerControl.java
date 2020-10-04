@@ -27,21 +27,10 @@ public class LabWorkerControl {
     
     public ArrayList<Result> getPendingResultsByCodeLab(String codeLabWorker){
         ArrayList<Result> results = new ArrayList<Result>();
-        Date objDate = new Date();
-        String strDateFormat = "yyyy-MM-dd";
-        SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
-        String dateToday = objSDF.format(objDate);
-        
-        JOptionPane.showMessageDialog(null,"Hoy es: " + getDayToday());
         boolean work = labWorkerWorkToday(codeLabWorker,getDayToday());
         if (work) {
             results = labWorkerDB.getAllResultsPendings();
-            JOptionPane.showMessageDialog(null,"Si puede trabajar hoy");
-        }else
-            JOptionPane.showMessageDialog(null,"No puede trabajar hoy");
-        
-        
-        
+        }
         return results;
     }
     
@@ -74,6 +63,22 @@ public class LabWorkerControl {
         String codeDay = adminDB.searchCodeDayByName(nameDay);
         work = labWorkerDB.labWorkerWorkToday(codeLabWorker, codeDay);
         return work;
+    }
+    
+    public String getDateToday(){
+        Date objDate = new Date();
+        String strDateFormat = "yyyy-MM-dd";
+        SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
+        String dateToday = objSDF.format(objDate);
+        return dateToday;
+    }
+    
+    public String getTime(){
+        Calendar calendario = Calendar.getInstance();
+        int hora =calendario.get(Calendar.HOUR_OF_DAY);
+        int minutos = calendario.get(Calendar.MINUTE);
+        String time = String.valueOf(hora)+":"+ String.valueOf(minutos) +":00";
+        return time;
     }
 }
 
