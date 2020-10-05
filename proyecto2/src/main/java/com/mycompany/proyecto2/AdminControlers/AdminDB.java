@@ -6,6 +6,7 @@
 package com.mycompany.proyecto2.AdminControlers;
 
 import com.mycompany.proyecto2.DBControlers.ConnectionDB;
+import com.mycompany.proyecto2.Utils.Medic;
 import com.mycompany.proyecto2.Utils.encryptPassword;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -320,5 +321,47 @@ public class AdminDB {
         } catch (Exception e) {
             
         }
+    }
+    
+    public Medic searchMedicByCode(String code){
+        Medic medic = null;                
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM MEDIC WHERE code = ?");
+            ps.setString(1, code);                       
+            rs = ps.executeQuery();            
+            if (rs.next()){
+                String codeMedic = rs.getString(1);
+                String name = rs.getString(2);
+                String collegiate = rs.getString(3);
+                String DPI = rs.getString(4);
+                String phone = rs.getString(5);
+                String email = rs.getString(6);
+                String password = rs.getString(7);
+                String initTime = rs.getString(8);
+                String finalTime = rs.getString(9);
+                String initWork = rs.getString(10);
+                medic = new Medic(codeMedic,name,collegiate,DPI,phone,email,initTime,finalTime, initWork);
+                medic.setPassword(password);
+                medic.setSpecialties(getSpecialtiesByCodeMedic(codeMedic));
+            }            
+        } catch (Exception e) {
+            
+        }
+        return medic;
+    }
+    
+    public ArrayList<String> getSpecialtiesByCodeMedic(String codeMedic){
+        ArrayList<String> specialties = new ArrayList<String>();
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM (SPECIALTY_MEDIC AS SM, SPECIALTY AS S) WHERE S.code = SM.SPECIALTY_code AND SM.MEDIC_code = ?;");
+            ps.setString(1, codeMedic);
+            rs = ps.executeQuery();            
+            while (rs.next()){
+                specialties.add(rs.getString(5));
+            }            
+        } catch (Exception e) {
+            
+        }
+        return specialties;
     }
 }

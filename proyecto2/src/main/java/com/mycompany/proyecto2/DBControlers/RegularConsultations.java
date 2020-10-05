@@ -7,9 +7,11 @@ package com.mycompany.proyecto2.DBControlers;
 
 import com.mycompany.proyecto2.Utils.Appointment;
 import com.mycompany.proyecto2.Utils.Exam;
+import com.mycompany.proyecto2.Utils.Medic;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -53,7 +55,7 @@ public class RegularConsultations {
         return appointment;
     }
     
-     public Exam getExamByCode(String codeExam){        
+    public Exam getExamByCode(String codeExam){        
         Exam exam = null;
         try {            
             ps = connection.prepareStatement("SELECT * FROM EXAM WHERE code = ?");
@@ -74,4 +76,50 @@ public class RegularConsultations {
         }
         return exam;
     }
+     
+    public String getNameSpecialtyByCode(String codeSpecialty){
+        String nameSpecialty = "";
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM SPECIALTY WHERE code = ?");
+            ps.setString(1, codeSpecialty);
+            ResultSet res = ps.executeQuery();            
+            if (res.next()){
+                nameSpecialty = res.getString(2);
+            }
+            res.close();
+        } catch (Exception e) {
+            
+        }
+        return nameSpecialty;
+    }
+    
+    public String searchNameMedicByCode(String code){
+        String nameMedic= "";                
+        try {            
+            ps = connection.prepareStatement("SELECT name FROM MEDIC WHERE code = ?");
+            ps.setString(1, code);                       
+            rs = ps.executeQuery();            
+            if (rs.next()){
+                nameMedic = rs.getString(1);
+            }            
+        } catch (Exception e) {
+            
+        }
+        return nameMedic;
+    }       
+    
+    public String searchNamePatientByCode(String code){
+        String nameMedic= "";                
+        try {            
+            ps = connection.prepareStatement("SELECT name FROM PATIENT WHERE code = ?");
+            ps.setString(1, code);                       
+            rs = ps.executeQuery();            
+            if (rs.next()){
+                nameMedic = rs.getString(1);
+            }            
+        } catch (Exception e) {
+            
+        }
+        return nameMedic;
+    } 
 }

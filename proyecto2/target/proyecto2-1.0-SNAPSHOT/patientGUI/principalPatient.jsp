@@ -46,14 +46,14 @@
                 <input type="hidden" value="2" name="report">
             </form>
             <form METHOD="POST" ACTION="patientGUI/reportsPatient/report3Patient.jsp">
-                <h3>Utilizacion de cada dia de trabajo</h3>
-                <input type="submit" value="Utilizacion de hoy"/>
+                <h3>Ultimas 5 consultas realizadas</h3>
+                <input type="submit" value="Ver consultas"/>
                 <input type="hidden" value="<%=namePatient%>" name="codePatient">
                 <input type="hidden" value="3" name="report">
             </form>
-            <form METHOD="POST" ACTION="labWorkerGUI/reportsLab/report4Lab.jsp">
-                <h3>10 fechas con mas trabajo realizado</h3>
-                <input type="submit" value="Ver fechas"/>
+            <form METHOD="POST" ACTION="patientGUI/reportsPatient/report4Patient.jsp">
+                <h3>Consultas realizadas con un médico en específico dentro de un intervalo de tiempo</h3>
+                <input type="submit" value="Ver consultas"/>
                 <input type="hidden" value="<%=namePatient%>" name="codePatient">
                 <input type="hidden" value="4" name="report">
             </form>

@@ -162,4 +162,28 @@ public class AdminControl {
         JOptionPane.showMessageDialog(null,"Se actualizo la consulta con exito");
     }
     
+    public boolean updateMedic(String[] specialties, String code, String name, String collegiate, String DPI, String phone,
+            String email, String password, String initTime, String finalTime, String initWork){
+        boolean addMedic = false;
+        if (specialties == null || code.equals("") || name.equals("") ||
+                collegiate.equals("") || DPI.equals("") || phone.equals("") || email.equals("") ||
+                password.equals("") || initTime.equals("") || finalTime.equals("")  || initWork.equals("")) {            
+                 addMedic = false;      
+        }else{
+            String codeSearch = adminDB.searchCodeMedicByCode(code);
+            if (code.equals(codeSearch) == false) {
+                if (phone.length()<=8) {
+                    adminDB.insertMedic(code, name, collegiate, DPI, phone, email, password, initTime, finalTime, initWork);
+                    for (int i = 0; i < specialties.length; i++) {
+                        String specialty = specialties[i];
+                        String codeSpecialty = adminDB.searchCodeSpecialtyByName(specialty);
+                        adminDB.insertSpecialtyMedic(codeSpecialty, code);
+                    }
+                    addMedic = true;
+                    JOptionPane.showMessageDialog(null,"Se agrego el medico con exito");
+                }
+            } 
+        }
+        return addMedic;
+    }
 }

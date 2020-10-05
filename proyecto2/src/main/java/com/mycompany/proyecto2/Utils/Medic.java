@@ -23,6 +23,7 @@ public class Medic {
     private String initTime;
     private String finalTime;
     private String initWork;
+    private String password;
 
     public Medic(String code, String name, String collegiate, String DPI, String phone, String mail, String initTime, String finalTime, String initWork) {
         this.code = code;
@@ -78,6 +79,14 @@ public class Medic {
 
     public ArrayList<String> getSpecialties() {
         return specialties;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     

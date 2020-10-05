@@ -88,12 +88,11 @@ public class PatientReportsDB {
         return results;      
     }        
     
-    public ArrayList<Appointment> getLast5AppointmentsByCodePatient(String date,String codePatient){
+    public ArrayList<Appointment> getLast5AppointmentsByCodePatient(String codePatient){
         ArrayList<Appointment> appointments = new ArrayList<Appointment>();
         try {            
-            ps = connection.prepareStatement("SELECT * FROM APPOINTMENT WHERE PATIENT_code = 118258 ORDER BY date_Appointment DESC LIMIT 5;");
-            ps.setString(1, date);
-            ps.setString(2, codePatient);
+            ps = connection.prepareStatement("SELECT * FROM APPOINTMENT WHERE PATIENT_code = ? ORDER BY date_Appointment DESC LIMIT 5;");
+            ps.setString(1, codePatient);
             ResultSet res = ps.executeQuery();            
             while (res.next()){
                 String code = res.getString(1);
@@ -102,6 +101,31 @@ public class PatientReportsDB {
                 String codeMedic = res.getString(5);                
                 String codeSpecialty = res.getString(6);
                 Appointment appointment = new Appointment(code,dateAppointment,time,codePatient,codeMedic,codeSpecialty);
+                appointments.add(appointment);               
+            }         
+            res.close();
+        } catch (Exception e) {
+            
+        }
+        return appointments;
+    }
+    
+    public ArrayList<Appointment> getAppointmentByCodeMedicAndDate(String codePatient,String date1, String date2, String codeMedic){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM APPOINTMENT WHERE PATIENT_code = ? AND MEDIC_code = ? AND date_Appointment BETWEEN ? AND ?;");
+            ps.setString(1, codePatient);
+            ps.setString(2, codeMedic);
+            ps.setString(3, date1);
+            ps.setString(4, date2);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);
+                String dateAppointment = res.getString(2);
+                String time = res.getString(3);
+                String codeMedic2 = res.getString(5);                
+                String codeSpecialty = res.getString(6);
+                Appointment appointment = new Appointment(code,dateAppointment,time,codePatient,codeMedic2,codeSpecialty);
                 appointments.add(appointment);               
             }         
             res.close();

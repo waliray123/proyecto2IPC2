@@ -104,4 +104,18 @@ public class PrivateInserts {
         }
     }        
     
+    public boolean registerPatient(String code,String name,String gender, String birth, 
+            String DPI,String phone,String weight, String typeBlood, String mail, String password){
+        boolean isRegistered = false;
+        if (code.equals("") || name.equals("") || gender.equals("") || birth.equals("") ||
+                DPI.equals("") || phone.equals("") || weight.equals("") || typeBlood.equals("")|| 
+                mail.equals("") || password.equals("")) {
+            isRegistered = false;
+        }else{
+            this.insertPatient(code, name, gender, birth, DPI, phone, weight, typeBlood, mail, password);
+            isRegistered = true;
+        }
+        return isRegistered;
+            
+    }
 }
