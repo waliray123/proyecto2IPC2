@@ -42,7 +42,7 @@
         <br>
         <br>
         <br>
-        <input type="button" value="Regresar" onclick="location.href='index.html'">
+        <input type="button" value="Regresar" onclick="location.href='index.jsp'">
         </center>
         <%if (request.getParameter("register") != null) {
             PrivateInserts privInsert = new PrivateInserts();

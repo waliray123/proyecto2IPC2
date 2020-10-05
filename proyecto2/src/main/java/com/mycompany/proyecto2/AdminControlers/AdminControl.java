@@ -111,7 +111,7 @@ public class AdminControl {
                     for (int i = 0; i < days.length; i++) {
                         String day = days[i];
                         String codeDay = adminDB.searchCodeDayByName(day);
-                        adminDB.insertDayLabWorker(codeDay, code);
+                        adminDB.insertDayLabWorker(code, codeDay);
                     }
                     addLab = true;
                     JOptionPane.showMessageDialog(null,"Se agrego el Laboratorista con exito");
@@ -163,17 +163,16 @@ public class AdminControl {
     }
     
     public boolean updateMedic(String[] specialties, String code, String name, String collegiate, String DPI, String phone,
-            String email, String password, String initTime, String finalTime, String initWork){
+            String email, String initTime, String finalTime, String initWork){
         boolean addMedic = false;
         if (specialties == null || code.equals("") || name.equals("") ||
-                collegiate.equals("") || DPI.equals("") || phone.equals("") || email.equals("") ||
-                password.equals("") || initTime.equals("") || finalTime.equals("")  || initWork.equals("")) {            
+                collegiate.equals("") || DPI.equals("") || phone.equals("") || email.equals("")
+                || initTime.equals("") || finalTime.equals("")  || initWork.equals("")) {            
                  addMedic = false;      
         }else{
-            String codeSearch = adminDB.searchCodeMedicByCode(code);
-            if (code.equals(codeSearch) == false) {
                 if (phone.length()<=8) {
-                    adminDB.insertMedic(code, name, collegiate, DPI, phone, email, password, initTime, finalTime, initWork);
+                    adminDB.updateMedic(code, name, collegiate, DPI, phone, email, initTime, finalTime, initWork);
+                    deleteAllSpecialtyMedic(code);
                     for (int i = 0; i < specialties.length; i++) {
                         String specialty = specialties[i];
                         String codeSpecialty = adminDB.searchCodeSpecialtyByName(specialty);
@@ -181,9 +180,49 @@ public class AdminControl {
                     }
                     addMedic = true;
                     JOptionPane.showMessageDialog(null,"Se agrego el medico con exito");
-                }
-            } 
+                }            
         }
         return addMedic;
     }
+    
+    public void deleteAllSpecialtyMedic(String codeMedic){
+        ArrayList<String> specialties = adminDB.getSpecialtiesByCodeMedic(codeMedic);
+        for (String specialty : specialties) {
+            String codeSpecialty = adminDB.searchCodeSpecialtyByName(specialty);
+            String codeRelation = adminDB.getCodeRelationSpecialtyMedic(codeMedic, codeSpecialty);
+            adminDB.deleteRelationSpecialtyMedis(codeRelation);
+        }
+    }
+    
+    public boolean updateLabWorker(String[] days, String code, String name, String registry, String DPI, String phone,
+            String email, String initWork, String typeExam){
+        boolean addLab = false;
+        if (days == null || code.equals("") || name.equals("") || registry.equals("") || 
+                DPI.equals("") || phone.equals("") || email.equals("") || initWork.equals("")) {            
+                 addLab = false;      
+        }else{
+                if (phone.length()<=8) {
+                    String codeExam = adminDB.searchCodeExamByName(typeExam);
+                    adminDB.updateLabWorker(code, name, registry, DPI, phone, email, initWork, codeExam);
+                    deleteRelationDayLabWorker(code);
+                    for (int i = 0; i < days.length; i++) {
+                        String day = days[i];
+                        String codeDay = adminDB.searchCodeDayByName(day);
+                        adminDB.insertDayLabWorker(code, codeDay);
+                    }
+                    addLab = true;
+                    JOptionPane.showMessageDialog(null,"Se agrego el Laboratorista con exito");
+                }
+            
+        }
+        return addLab;
+    }
+    
+    public void deleteRelationDayLabWorker(String codeLabWorker){
+        ArrayList<String> codesRelation = adminDB.getCodesRelationDayLabWorker(codeLabWorker);
+        for (String codeRelation : codesRelation) {                        
+            adminDB.deleteRelationDayLabWorker(codeRelation);
+        }
+    }
+    
 }

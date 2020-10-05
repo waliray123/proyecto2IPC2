@@ -24,3 +24,4 @@ com/mycompany/proyecto2/MedicControlers/MedicDB.class
 com/mycompany/proyecto2/PatientControlers/PatientReportsDB.class
 com/mycompany/proyecto2/Utils/Appointment.class
 com/mycompany/proyecto2/Utils/Medic.class
+com/mycompany/proyecto2/Utils/LabWorker.class

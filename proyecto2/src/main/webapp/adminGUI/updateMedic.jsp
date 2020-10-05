@@ -4,6 +4,7 @@
     Author     : user-ubunto
 --%>
 
+<%@page import="javax.swing.JOptionPane"%>
 <%@page import="com.mycompany.proyecto2.Utils.encryptPassword"%>
 <%@page import="com.mycompany.proyecto2.AdminControlers.AdminControl"%>
 <%@page import="java.util.ArrayList"%>
@@ -38,7 +39,7 @@
                 <form>
                     <h2>Llene los siguientes campos para ingresar al medico</h2>
             <h3>Codigo</h3>
-            <input type="text" name="code" value="<%=medic.getCode()%>"/><br>
+            <p><%=codeMedic%></p>
             <h3>Nombre</h3>
             <input type="text" name="name" value="<%=medic.getName()%>"/><br>
             <h3>Numero de colegiado</h3>
@@ -69,7 +70,8 @@
                 <%}else{%>
                     <label><input type="checkbox" name="cbox" value="<%=specialty%>" > <%=specialty%></label><br>
                 <%}
-            }%>                        
+            }%>  
+                <input type="hidden" name="codeMedic" value="<%=codeMedic%>">
                 <input type="submit" name="updateM" value="Actualizar Medico" />
                 </form>                
         <%        }
@@ -77,7 +79,7 @@
         %>
        <%if (request.getParameter("updateM") != null) {
         String[] specialtiesChecked = request.getParameterValues("cbox");
-        String code = request.getParameter("code");
+        String code = request.getParameter("codeMedic");
         String name = request.getParameter("name");
         String collegiate = request.getParameter("collegiate");
         String DPI = request.getParameter("DPI");
@@ -85,11 +87,10 @@
         String email = request.getParameter("email");
         String initTime = request.getParameter("initTime");
         String finalTime = request.getParameter("finalTime");        
-        String initDate = request.getParameter("initDate");        
-        String password = request.getParameter("password");        
-        boolean created = adminC.addNewMedic(specialtiesChecked, code, name, collegiate, DPI, phone, email, password, initTime, finalTime, initDate);        
+        String initDate = request.getParameter("initDate");       
+        boolean created = adminC.updateMedic(specialtiesChecked, code, name, collegiate, DPI, phone, email, initTime, finalTime, initDate);        
         if (created == false) {
-            JOptionPane.showMessageDialog(null,"Ocurrio un error al crear el medico, Revise que sus datos sean correctos");
+            JOptionPane.showMessageDialog(null,"Ocurrio un error al Actualizar el medico, Revise que sus datos sean correctos");
         }
       }
     %>

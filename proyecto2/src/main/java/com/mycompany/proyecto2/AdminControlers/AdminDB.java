@@ -6,12 +6,14 @@
 package com.mycompany.proyecto2.AdminControlers;
 
 import com.mycompany.proyecto2.DBControlers.ConnectionDB;
+import com.mycompany.proyecto2.Utils.LabWorker;
 import com.mycompany.proyecto2.Utils.Medic;
 import com.mycompany.proyecto2.Utils.encryptPassword;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -363,5 +365,134 @@ public class AdminDB {
             
         }
         return specialties;
+    }
+    
+    public String getCodeRelationSpecialtyMedic(String codeMedic, String codeSpecialty){
+        String codeRelation = "";
+        try {            
+            ps = connection.prepareStatement("SELECT SM.code FROM (SPECIALTY_MEDIC AS SM, SPECIALTY AS S) WHERE S.code = SM.SPECIALTY_code AND SM.MEDIC_code = ?;");
+            ps.setString(1, codeMedic);
+            rs = ps.executeQuery();            
+            if (rs.next()){
+                codeRelation = rs.getString(1);
+            }            
+        } catch (Exception e) {
+            
+        }
+        return codeRelation;
+    }
+    
+    public ArrayList<String> getCodesRelationDayLabWorker(String codeLabWorker){
+        ArrayList<String> codes = new ArrayList<String>();
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM DAY_LABWORKER WHERE LAB_WORKER_code = ?;");
+            ps.setString(1, codeLabWorker);
+            rs = ps.executeQuery();            
+            while (rs.next()){
+                codes.add(rs.getString(1));
+            }            
+        } catch (Exception e) {
+            
+        }
+        return codes;
+    }
+    
+    public ArrayList<String> getNameDaysLabWorker(String codeLabWorker){
+        ArrayList<String> codes = new ArrayList<String>();
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM (DAY_LABWORKER AS DL, DAY AS D) WHERE DL.LAB_WORKER_code = ? AND D.code = DL.DAY_code;");
+            ps.setString(1, codeLabWorker);
+            rs = ps.executeQuery();            
+            while (rs.next()){
+                codes.add(rs.getString(5));
+            }            
+        } catch (Exception e) {
+            
+        }
+        return codes;
+    }
+    
+    public void deleteRelationSpecialtyMedis(String codeRelation){
+        try {
+            ps = connection.prepareStatement("DELETE FROM SPECIALTY_MEDIC WHERE code = ?;");            
+            ps.setString(1, codeRelation);                        
+            ps.executeUpdate();//action done            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
+    public void deleteRelationDayLabWorker(String codeRelation){
+        try {
+            ps = connection.prepareStatement("DELETE FROM DAY_LABWORKER WHERE code = ?;");            
+            ps.setString(1, codeRelation);                        
+            ps.executeUpdate();//action done            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
+    public void updateMedic(String code, String name, String collegiate, String DPI, String phone,
+            String email, String initTime, String finalTime, String initWork){
+        try {
+            ps = connection.prepareStatement("UPDATE MEDIC SET name = ?, collegiate = ?, DPI = ?, phone = ?, email = ?, initTime = ?, finalTime = ?, init_Work = ? WHERE code = ?");            
+            ps.setString(1, name);            
+            ps.setString(2, collegiate);
+            ps.setString(3, DPI);
+            ps.setString(4, phone);
+            ps.setString(5, email);
+            ps.setString(6, initTime);
+            ps.setString(7, finalTime);
+            ps.setString(8, initWork);
+            ps.setString(9, code);
+            
+            ps.executeUpdate();//action done
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
+    public void updateLabWorker(String code, String name, String registry, String DPI, String phone,
+            String email, String initWork, String typeExam){
+        try {
+            ps = connection.prepareStatement("UPDATE LAB_WORKER SET name = ?, registry = ?, DPI = ?, phone = ?, mail = ?, init_Work = ?, EXAM_code = ? WHERE code = ?");            
+            ps.setString(1, name);            
+            ps.setString(2, registry);
+            ps.setString(3, DPI);
+            ps.setString(4, phone);
+            ps.setString(5, email);
+            ps.setString(6, initWork);
+            ps.setString(7, typeExam);
+            ps.setString(8, code);
+            
+            ps.executeUpdate();//action done
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
+    public LabWorker getLabWorkerByCode(String codeLabWorker){
+        LabWorker labW = null;
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM LAB_WORKER WHERE code = ?;");
+            ps.setString(1, codeLabWorker);
+            rs = ps.executeQuery();            
+            while (rs.next()){
+                String code = rs.getString(1);
+                String name = rs.getString(2);
+                String registry = rs.getString(3);
+                String DPI = rs.getString(4);
+                String phone = rs.getString(5);
+                String mail = rs.getString(6);
+                String initWork = rs.getString(7);
+                String ExamCode = rs.getString(9);
+                labW = new LabWorker(code, name, registry, DPI, phone, mail, initWork,ExamCode);
+            }            
+        } catch (Exception e) {
+            
+        }
+        return labW;
     }
 }

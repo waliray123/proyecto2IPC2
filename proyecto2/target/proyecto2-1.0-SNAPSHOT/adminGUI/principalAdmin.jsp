@@ -29,6 +29,12 @@
             </form>
         </div>
         <div>
+            <form METHOD="POST" ACTION="adminGUI/updateLabWorker.jsp">
+                <h3> Actualizar Laboratorista</h3>
+                <input type="submit" value="Actualizar Laboratorista" />
+            </form>
+        </div>
+        <div>
             <form METHOD="POST" ACTION="adminGUI/addExam.jsp">
                 <h3> Crear examen </h3>
                 <input type="submit" value="Crear examen" />
