@@ -30,6 +30,13 @@
                 <input type="submit" value="Agendar Examen" />
                 <input type="hidden" value="<%=namePatient%>" name="codePatient">
             </form>
+        </div>
+        <div>
+            <form METHOD="POST" ACTION="patientGUI/medicalHistory.jsp">
+                <h3> Ver mi historial medico </h3>
+                <input type="submit" value="Ver historial" />
+                <input type="hidden" value="<%=namePatient%>" name="codePatient">
+            </form>
         </div> 
         <h2>Reportes de Paciente</h2>
         <div>

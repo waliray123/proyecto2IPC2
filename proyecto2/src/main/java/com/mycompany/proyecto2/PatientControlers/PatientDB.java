@@ -9,6 +9,7 @@ import com.mycompany.proyecto2.DBControlers.ConnectionDB;
 import com.mycompany.proyecto2.Utils.Appointment;
 import com.mycompany.proyecto2.Utils.Exam;
 import com.mycompany.proyecto2.Utils.Medic;
+import com.mycompany.proyecto2.Utils.Patient;
 import com.mycompany.proyecto2.Utils.Result;
 import com.mycompany.proyecto2.Utils.encryptPassword;
 import java.io.File;
@@ -160,7 +161,7 @@ public class PatientDB {
         return lastCode;
     }
     
-    public ArrayList<Appointment> getAppointmentsByCodePatientBeforeDate(String date,String codePatient){
+    public ArrayList<Appointment> getAppointmentsByCodePatientAfterDate(String date,String codePatient){
         ArrayList<Appointment> appointments = new ArrayList<Appointment>();
         try {            
             ps = connection.prepareStatement("SELECT * FROM APPOINTMENT WHERE date_Appointment >= ? AND PATIENT_code = ?");
@@ -277,4 +278,133 @@ public class PatientDB {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error Result EN BASE DE DATOS", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public Patient searchCodePatient(String codePatient){
+        Patient patient = null;
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM PATIENT WHERE code = ?");
+            ps.setString(1, codePatient);
+            ResultSet res = ps.executeQuery();            
+            if(res.next()){
+                String code = res.getString(1);
+                String name = res.getString(2);
+                String gender = res.getString(3) ;
+                String birth = res.getString(4);
+                String DPI = res.getString(5);
+                String phone = res.getString(6);
+                String weight = res.getString(7);
+                String typeBlood = res.getString(8);
+                String mail =res.getString(9);
+                patient = new Patient(code,  name, gender,  birth,  DPI, phone, weight, typeBlood, mail);
+            }
+            res.close();
+        } catch (Exception e) {
+            
+        }
+        return patient;
+    }
+    
+    public ArrayList<Appointment> getAppointmentsByCodePatientBeforeDate(String date,String codePatient){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM APPOINTMENT WHERE date_Appointment <= ? AND PATIENT_code = ? ORDER BY date_Appointment DESC");
+            ps.setString(1, date);
+            ps.setString(2, codePatient);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);
+                String dateAppointment = res.getString(2);
+                String time = res.getString(3);
+                String codeMedic = res.getString(5);                
+                String codeSpecialty = res.getString(6);
+                Appointment appointment = new Appointment(code,dateAppointment,time,codePatient,codeMedic,codeSpecialty);
+                appointments.add(appointment);               
+            }         
+            res.close();
+        } catch (Exception e) {
+            
+        }
+        return appointments;
+    }
+    
+    public ArrayList<Result> getResultsDeliveredByCodePatient(String codePatient){
+         ArrayList<Result> results = new  ArrayList<Result>();
+         try {            
+            ps = connection.prepareStatement("SELECT * FROM RESULT WHERE PATIENT_code = ? AND LAB_WORKER_code IS NOT NULL ORDER BY date_Result DESC;");
+            ps.setString(1, codePatient);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);
+                Blob order_Result = res.getBlob(2);
+                Blob inform = res.getBlob(3);
+                String date = res.getString(4);
+                String time = res.getString(5);
+                String codeLabWorker = res.getString(6);
+                String codePatient2 = res.getString(7);
+                String codeMedic = res.getString(8);
+                String codeExam = res.getString(9);
+                Result tempResult = new Result(code,order_Result,inform,date,time,codeLabWorker,codePatient2,codeMedic,codeExam);
+                results.add(tempResult);               
+            }         
+            res.close();
+        } catch (Exception e) {
+            
+        }         
+         return results;
+    }
+    
+    public ArrayList<Medic> getFilterMedics(String name, String specialty, String time){
+       ArrayList<Medic> medics = new ArrayList<Medic>();
+       //SELECT * FROM (MEDIC AS M,SPECIALTY AS S, SPECIALTY_MEDIC AS SM) WHERE M.name LIKE '%A%' AND '07:00:00'BETWEEN initTime AND finalTime AND SM.SPECIALTY_code = S.code AND M.code = SM.MEDIC_code AND S.name LIKE '%P%';
+       int count = 1;
+       String nameQuery = "%"+name+"%";
+       String specialtyQuery = "%"+specialty+"%";
+       try {
+           String query = "SELECT * FROM (MEDIC AS M,SPECIALTY AS S, SPECIALTY_MEDIC AS SM) WHERE M.name LIKE ? AND SM.SPECIALTY_code = S.code AND M.code = SM.MEDIC_code";
+           if (time.equals("") ==false) {
+               query += " AND ? BETWEEN initTime AND finalTime";
+               count++;
+           }
+           if (specialty.equals("") == false) {
+               query += " AND S.name LIKE ?";
+               count++;
+           }
+            ps = connection.prepareStatement(query);
+            ps.setString(1, nameQuery);
+            if (time.equals("") ==false) {
+                ps.setString(2, time);                
+            }
+            if (specialty.equals("") == false) {
+                ps.setString(count, specialtyQuery);
+            }
+            rs = ps.executeQuery();            
+            while(rs.next()){       
+                boolean exists = false;
+                String code = rs.getString(1);
+                for (Medic medic : medics) {
+                    if (code.equals(medic.getCode())) {
+                        exists = true;
+                        break;
+                    }
+                }
+                String name2= rs.getString(2);
+                String collegiate= rs.getString(3);
+                String DPI= rs.getString(4);
+                String phone= rs.getString(5);
+                String mail= rs.getString(6);
+                String initTime= rs.getString(8);
+                String finalTime= rs.getString(9);
+                String initWork= rs.getString(10);
+                Medic temporalMedic = new Medic(code,name2,collegiate,DPI,phone,mail,initTime,finalTime,initWork);
+                ArrayList<String> specialties = getAllSpecialtiesByCodeMedic(code);
+                temporalMedic.setSpecialties(specialties);
+                if (exists == false) {
+                    medics.add(temporalMedic); 
+                }                               
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error Filtro", JOptionPane.ERROR_MESSAGE);
+        }
+       return medics;
+   }
 }

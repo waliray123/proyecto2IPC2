@@ -9,12 +9,15 @@ import com.mycompany.proyecto2.AdminControlers.AdminDB;
 import com.mycompany.proyecto2.Utils.Appointment;
 import com.mycompany.proyecto2.Utils.Exam;
 import com.mycompany.proyecto2.Utils.Medic;
+import com.mycompany.proyecto2.Utils.Patient;
 import com.mycompany.proyecto2.Utils.Result;
 import java.io.File;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -88,7 +91,7 @@ public class PatientControl {
     }
     
     public ArrayList<Appointment> getAppointmentsByCodePatientAndDate(String date, String codePatient){
-        ArrayList<Appointment> appointments = patientDB.getAppointmentsByCodePatientBeforeDate(date, codePatient);
+        ArrayList<Appointment> appointments = patientDB.getAppointmentsByCodePatientAfterDate(date, codePatient);
         return appointments;
     }
     
@@ -119,7 +122,28 @@ public class PatientControl {
         return lastResult;
     }
     
-    public void sheduleExam(String code, File orderResult, String codePatient, String codeMedic, String codeExam){
-        
+
+    public Patient patientExist(String codePatient){
+        Patient patient = patientDB.searchCodePatient(codePatient);
+        return patient;
+    }
+    
+    public ArrayList<Result> getResultsDeliveredByCodePatient(String codePatient){
+        ArrayList<Result> results = patientDB.getResultsDeliveredByCodePatient(codePatient);        
+        return results;
+    }
+    
+    public ArrayList<Appointment> getAppointmentsBeforeByCodePatient(String codePatient){
+        Date objDate = new Date();
+        String strDateFormat = "yyyy-MM-dd";
+        SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
+        String dateToday = objSDF.format(objDate);        
+        ArrayList<Appointment> appointment = patientDB.getAppointmentsByCodePatientBeforeDate(dateToday,codePatient);        
+        return appointment;
+    }
+    
+    public ArrayList<Medic> getFilterMedics(String name, String specialty, String time){
+        ArrayList<Medic> medics = patientDB.getFilterMedics(name, specialty, time);
+        return medics;
     }
 }

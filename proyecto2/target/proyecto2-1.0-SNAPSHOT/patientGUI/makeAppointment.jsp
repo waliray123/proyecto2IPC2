@@ -11,7 +11,15 @@
 <!DOCTYPE html>
 <html>
 <%PatientControl patientC = new PatientControl();
-    ArrayList<Medic> medics = patientC.getAllMedics();
+    ArrayList<Medic> medics = null;
+    if (request.getParameter("searchMedic") != null) {
+        String name = request.getParameter("nameSearch");
+        String specialty = request.getParameter("specialtySearch");
+        String time = request.getParameter("timeSearch");
+        medics = patientC.getFilterMedics(name, specialty, time);
+    }else{
+        medics = patientC.getAllMedics();
+    }
     String codePatient = request.getParameter("codePatient");
 %>     
     <head>
@@ -23,12 +31,11 @@
         <h1>Agendar una cita</h1>
         <div>
             <form>
-                <input type="text" name="name" placeholder="Juan Perez"/>
-                <input type="text" name="specialty" placeholder="Especialidad"/>
-                <input type="time" name="initHour" placeholder="Hora de inicio"/>
-                <input type="time" name="finalHour" placeholder="Hora de salida"/>
+                <input type="text" name="nameSearch" placeholder="Juan Perez"/>
+                <input type="text" name="specialtySearch" placeholder="Especialidad"/>
+                <input type="time" name="timeSearch" placeholder="Hora de Atencion"/>
                 <input type="hidden" value="<%=codePatient%>" name="codePatient">
-                <input type="submit" value = "searchMedic">
+                <input type="submit" name ="searchMedic" value = "Buscar medico">
             </form>    
         </div>
         <p>Medicos disponibles</p>
