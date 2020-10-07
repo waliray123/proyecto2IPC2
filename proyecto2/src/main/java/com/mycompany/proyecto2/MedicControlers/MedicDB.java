@@ -7,11 +7,13 @@ package com.mycompany.proyecto2.MedicControlers;
 
 import com.mycompany.proyecto2.DBControlers.ConnectionDB;
 import com.mycompany.proyecto2.Utils.Appointment;
+import com.mycompany.proyecto2.Utils.DateQuantity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -99,5 +101,51 @@ public class MedicDB {
         int size = codesInforms.size();        
         lastInform = String.valueOf(codesInforms.get(size-1)+1);
         return lastInform;
+    }
+    
+    public ArrayList<Appointment> getAppointmentsByCodeMedicAndDate(String codeMedic, String date1, String date2){        
+        ArrayList<Appointment> appointments =new ArrayList<Appointment>();
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM APPOINTMENT WHERE MEDIC_code = ? AND date_Appointment BETWEEN ? AND ?;");
+            ps.setString(1, codeMedic);
+            ps.setString(2, date1);
+            ps.setString(3, date2);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);
+                String date = res.getString(2);
+                String time = res.getString(3);
+                String codePatient = res.getString(4);                
+                String codeSpecialty = res.getString(6);
+                Appointment appointment = new Appointment(code,date,time,codePatient,codeMedic,codeSpecialty);
+                appointments.add(appointment);
+            }
+            res.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return appointments;
+    }
+    
+    //SELECT MEDIC_code,PATIENT_code,COUNT(PATIENT_code) FROM INFORM WHERE MEDIC_code = 'MED-123' AND date_Inform BETWEEN '2020-01-01' AND '2020-12-01' GROUP BY PATIENT_code ORDER BY PATIENT_code DESC;
+    public ArrayList<DateQuantity> getPatientsWithMoreInforms(String codeMedic, String date1, String date2){        
+        ArrayList<DateQuantity> patientsQ =new ArrayList<DateQuantity>();
+        try {            
+            ps = connection.prepareStatement("SELECT MEDIC_code, PATIENT_code, COUNT(PATIENT_code) FROM INFORM WHERE MEDIC_code = ? AND date_Inform BETWEEN ? AND ? GROUP BY PATIENT_code ORDER BY PATIENT_code DESC;");
+            ps.setString(1, codeMedic);
+            ps.setString(2, date1);
+            ps.setString(3, date2);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String codePatient = res.getString(2);
+                String quantity = res.getString(3);
+                DateQuantity patientQ = new DateQuantity(codePatient, quantity);
+                patientsQ.add(patientQ);
+            }
+            res.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return patientsQ;
     }
 }

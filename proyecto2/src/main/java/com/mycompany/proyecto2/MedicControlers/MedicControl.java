@@ -6,6 +6,7 @@
 package com.mycompany.proyecto2.MedicControlers;
 
 import com.mycompany.proyecto2.Utils.Appointment;
+import com.mycompany.proyecto2.Utils.DateQuantity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -45,5 +46,15 @@ public class MedicControl {
             medicDB.insertInform(code, dateInform, timeInform, data, codePatient, codeMedic);
             JOptionPane.showMessageDialog(null,"Se agrego el informe correctamente");
         }
+    }
+    
+    public ArrayList<Appointment> getAppointmentsByCodeMedicAndDate(String codeMedic, String date1 ,String date2){
+        ArrayList<Appointment> appointments = medicDB.getAppointmentsByCodeMedicAndDate(codeMedic, date1, date2);
+        return appointments;
+    }
+    
+    public ArrayList<DateQuantity> getPatientsWithMoreInforms(String codeMedic, String date1 ,String date2){
+        ArrayList<DateQuantity> patientsQ = medicDB.getPatientsWithMoreInforms(codeMedic, date1, date2);
+        return patientsQ;
     }
 }

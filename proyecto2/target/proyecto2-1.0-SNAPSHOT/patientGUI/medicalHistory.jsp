@@ -14,7 +14,8 @@
 <!DOCTYPE html>
 <html>
     <%  PatientControl patientC = new PatientControl();
-        String codePatient = request.getParameter("codePatient");          
+        String codePatient = "";
+        codePatient = request.getParameter("codePatient");          
     %>
     <head>
         <link href="/proyecto2/css/styles.css" rel="stylesheet"/>
@@ -24,7 +25,7 @@
     <body>
         <center>
         <h1>Historial Medico</h1>
-        <%if (codePatient.equals("")) {%>
+        <%if (codePatient == null || codePatient.equals("")) {%>
         <form>
             <p>Escribe el codigo del paciente</p> 
             <input type="text" name="codePatient">
