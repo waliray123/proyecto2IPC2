@@ -20,21 +20,23 @@
         ArrayList<String> exams = adminDB.getAllExams();
     %>
     <head>
+        <link href="/proyecto2/css/styles.css" rel="stylesheet"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Agendar Examen</title>
     </head>
     <body>
-        <h1>Agendar examen</h1>
-        <form>
-            <p>Seleccione el tipo de examen que desea hacer</p>
+        <center><h1>Agendar examen</h1></center>
+        <form class="formulario2">
+            <h3>Seleccione el tipo de examen que desea hacer</h3>
             <select name="typeExam">
                 <%for (String exam : exams) {%>
                 <option value="<%=exam%>"><%=exam%></option>
                 <%    }
                 %>
             </select> 
+            <br><br>
             <input type="hidden" value="<%=codePatient%>" name="codePatient"/>
-            <input type="submit" value="Seleccionar" name="selectTypeExam"/>
+           <center> <input type="submit" value="Seleccionar" name="selectTypeExam" class="boton2"/></center>
         </form>
         <%if (request.getParameter("selectTypeExam") != null) {
                 String typeExam = request.getParameter("typeExam");
@@ -44,7 +46,8 @@
                 boolean useOrder = exam.isUseOrder();
                 String codeResult = patientC.getLastResult();
         %>
-        <form method="post" enctype="multipart/form-data" action="/proyecto2/sheduleResult">
+        <form method="post" enctype="multipart/form-data" action="/proyecto2/sheduleResult" class="formulario3">
+            <center>
             <h4>Codigo de Examen</h4>  
             <%=codeResult%>
             <h4>Codigo de Paciente</h4>
@@ -63,7 +66,8 @@
             <input type="hidden" value="<%=codeResult%>" name="codeResult" />
             <input type="hidden" value="<%=codePatient%>" name="codePatient" />
             <input type="hidden" value="<%=codeExam%>" name="codeExam" />
-            <br><input type="submit" value="Agendar Examen" name="insertResult"/>            
+            <br><input type="submit" value="Agendar Examen" name="insertResult" class="boton"/>            
+            </center>
         </form> 
             <%}else if (request.getParameter("insertResult") != null) {
 //                String codeResult = request.getParameter("");
@@ -75,5 +79,11 @@
                 }
                             
             %>
+        <form METHOD="POST" ACTION="/proyecto2/patientGUI/principalPatient.jsp">   
+            <center>
+                <input type="hidden" value="<%=codePatient%>" name="username">
+                <br><br><input type="submit" value="Regresar" class="boton"/>
+            </center>
+        </form>
     </body>
 </html>

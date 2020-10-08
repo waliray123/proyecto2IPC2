@@ -81,6 +81,7 @@ public class sheduleResult extends HttpServlet {
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
         }
+        String codePatient2 = "";
         try {
             @SuppressWarnings("unchecked")
             List<FileItem> formItems = upload.parseRequest(request);
@@ -107,6 +108,7 @@ public class sheduleResult extends HttpServlet {
                             codeResult = fieldValue;
                         }else if (fieldName.equals("codePatient")) {
                             codePatient = fieldValue;
+                            codePatient2 = codePatient;
                         }else if (fieldName.equals("codeExam")) {
                             codeExam = fieldValue;
                         }
@@ -115,12 +117,14 @@ public class sheduleResult extends HttpServlet {
                 //Enviar a guardar
                 PatientDB patientDB = new PatientDB();
                 patientDB.insertResultByPatient(codeResult, storeFile, codePatient, codeMedic, codeExam);
+                JOptionPane.showMessageDialog(null,"Se agendo con exito el examen con exito");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null,ex);
         }
-        getServletContext().getRequestDispatcher("/patientGUI/message.jsp").forward(request, response);
+        request.setAttribute("username", codePatient2);
         
+        request.getRequestDispatcher("/patientGUI/principalPatient.jsp").forward(request, response);
     }
 
     /**

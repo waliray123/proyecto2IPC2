@@ -27,18 +27,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Agendar cita</title>
     </head>    
-    <body>        
+    <body> 
+        <center>
+        <div class="formulario3">
         <h1>Agendar una cita</h1>
         <div>
-            <form>
+            <form class="formulario2">
                 <input type="text" name="nameSearch" placeholder="Juan Perez"/>
                 <input type="text" name="specialtySearch" placeholder="Especialidad"/>
                 <input type="time" name="timeSearch" placeholder="Hora de Atencion"/>
                 <input type="hidden" value="<%=codePatient%>" name="codePatient">
-                <input type="submit" name ="searchMedic" value = "Buscar medico">
+                <input type="submit" name ="searchMedic" value = "Buscar medico" class="boton2">
             </form>    
         </div>
-        <p>Medicos disponibles</p>
+        <h2>Medicos disponibles</h2>
         <table class = "table">
             <tr>
                 <th>Codigo</th>
@@ -74,13 +76,12 @@
         </table>
         <br>
         <h3>Verificar si el medico esta libre</h3>
-        <fieldset>
-        <form>
+        <form class="formulario2">
             <input type="text" name="codeMedic">            
             <input type="date" name="dateSearch">
             <input type="time" name="timeSearch">
             <input type="hidden" value="<%=codePatient%>" name="codePatient"><br>
-            <input type="submit" value = "Ver Horario" name="seeShedule">
+            <input type="submit" value = "Ver Horario" name="seeShedule" class="boton2">
         </form>            
             <%if (request.getParameter("seeShedule") != null) {
                 String codeMedic = request.getParameter("codeMedic");
@@ -94,22 +95,17 @@
                 <%}
             }            
             %>
-        </fieldset>
-        <br>
-        <br>
         <h3>Agendar cita</h3>
-        <fieldset>
             <legend>Ingresar datos</legend>
-        <form>
-            Codigo de paciente: <%=codePatient%> 
-            Codigo Medico: <input type="text" name="codeMedic" >                              
-            Fecha: <input type="date" name="dateSearch">
-            Hora: <input type="time" name="timeSearch">
-            Especialidad: <input type="text" name="specialty"><br>
-            <input type="submit" value = "Agendar" name="shedule">    
+        <form class="formulario2">
+            <p>Codigo de paciente: <%=codePatient%> </p>
+            <p>Codigo Medico: </p><input type="text" name="codeMedic" >                              
+            <p>Fecha: </p><input type="date" name="dateSearch">
+            <p>Hora: </p><input type="time" name="timeSearch">
+            <p>Especialidad: </p><input type="text" name="specialty"><br>
+            <input type="submit" value = "Agendar" name="shedule" class="boton2">    
             <input type="hidden" value="<%=codePatient%>" name="codePatient">
         </form>
-        </fieldset>
             <%if (request.getParameter("shedule") != null) {
                     codePatient =request.getParameter("codePatient");         
                     String codeMedic =request.getParameter("codeMedic");         
@@ -119,5 +115,13 @@
                     patientC.sheduleAppointment(codePatient, codeMedic, dateAppointment, timeAppointment, specialty);
                 }
             %>
+       </div>       
+       </center>
+       <form METHOD="POST" ACTION="/proyecto2/patientGUI/principalPatient.jsp">   
+            <center>
+                <input type="hidden" value="<%=codePatient%>" name="username">
+                <br><br><input type="submit" value="Regresar" class="boton"/>
+            </center>
+        </form>
     </body>
 </html>

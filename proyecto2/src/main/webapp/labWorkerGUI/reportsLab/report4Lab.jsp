@@ -35,5 +35,11 @@
             %>
         </table>
         </center>
+        <form METHOD="POST" ACTION="/proyecto2/labWorkerGUI/principallabWorker.jsp">   
+            <center>
+                <input type="hidden" value="<%=codeLabWorker%>" name="username">
+                <br><br><input type="submit" value="Regresar" class="boton"/>
+            </center>
+        </form>
     </body>
 </html>

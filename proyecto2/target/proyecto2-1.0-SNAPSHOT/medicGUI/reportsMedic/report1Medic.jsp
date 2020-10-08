@@ -63,5 +63,11 @@
         <%    }
         %>
         </center>
+        <form METHOD="POST" ACTION="/proyecto2/medicGUI/principalMedic.jsp">   
+            <center>
+                <input type="hidden" value="<%=codeMedic%>" name="username">
+                <br><br><input type="submit" value="Regresar" class="boton"/>
+            </center>
+        </form>
     </body>
 </html>

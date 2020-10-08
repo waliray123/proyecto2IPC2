@@ -21,16 +21,16 @@
         ArrayList<Appointment> appointments = medicC.getAppointmentsPendingByCodeMedicAndDate(codeMedic, objSDF.format(objDate));        
     %>    
     <head>
+        <link href="/proyecto2/css/styles.css" rel="stylesheet"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Culminar Consulta</title>
     </head>
     <body>
         <h1>Culminar Consulta</h1>
-        <%if (request.getParameter("selectAppointment") == null) {%>
-        
-        <h3>Seleccione la consulta</h3>
-        <p>Solo se muestran las consultas que tiene pendientes en el dia</p>                
-        <form method="POST">
+        <%if (request.getParameter("selectAppointment") == null) {%>                              
+        <form method="POST" class="formulario">
+            <h3>Seleccione la consulta</h3>
+            <p>Solo se muestran las consultas que tiene pendientes en el dia</p>  
             <select name="appointments">
                 <%for (Appointment appointment : appointments) {
                         String code = appointment.getCode();%>
@@ -50,13 +50,14 @@
             String timeAppointment = appointment.getTime();  
             String codeInform = medicC.getLastCodeInform();
         %>
-        <form>            
-            <h4>Codigo del informe:</h4> <%=codeInform%>
-            <h4>Codigo de la cita:</h4> <%=codeAppointment%>
-            <h4>Codigo del Medico:</h4> <%=codeMedic%>
-            <h4>Codigo del Paciente:</h4> <%=codePatient%>
-            <h4>Fecha de Hoy:</h4> <%=dateToday%>
-            <h4>Hora de la cita:</h4> <%=timeAppointment%>
+        <form class="formulario3"> 
+            <center>
+            <h4>Codigo del informe:</h4> <p><%=codeInform%></p>
+            <h4>Codigo de la cita:</h4> <p><%=codeAppointment%></p>
+            <h4>Codigo del Medico:</h4> <p><%=codeMedic%></p>
+            <h4>Codigo del Paciente:</h4> <p><%=codePatient%></p>
+            <h4>Fecha de Hoy:</h4> <p><%=dateToday%></p>
+            <h4>Hora de la cita:</h4> <p><%=timeAppointment%></p>
             <h4>Descripcion de la consulta (Informe):</h4>
             <textarea name="inform" rows="10" cols="45"></textarea><br>
             <input type="hidden" value="<%=codeMedic%>" name="codeMedic">
@@ -66,6 +67,7 @@
             <input type="hidden" value="<%=timeAppointment%>" name="timeAppointment">
             <input type="hidden" value="<%=codeInform%>" name="codeInform">
             <input type="submit" value="Guardar informe" name = "sendInform">
+            </center>
         </form>
         <%}%>
         <%if(request.getParameter("sendInform") != null){
@@ -78,5 +80,11 @@
             medicC.insertInform(codeInform, dateToday, timeAppointment, dataInform, codePatient, codeMedic);
         }
         %>
+        <form METHOD="POST" ACTION="/proyecto2/medicGUI/principalMedic.jsp">   
+            <center>
+                <input type="hidden" value="<%=codeMedic%>" name="username">
+                <br><br><input type="submit" value="Regresar" class="boton"/>
+            </center>
+        </form>
     </body>
 </html>

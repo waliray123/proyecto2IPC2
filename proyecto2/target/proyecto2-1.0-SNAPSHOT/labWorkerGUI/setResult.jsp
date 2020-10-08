@@ -18,28 +18,32 @@
         ArrayList<Result> results = labC.getPendingResultsByCodeLab(codeLabWorker);        
     %>
     <head>
+        <link href="/proyecto2/css/styles.css" rel="stylesheet"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Examenes Pendientes</title>
     </head>
     <body>
         <h1>Examenes Pendientes</h1>
-        <p>Selecciones algun examen pendiente<p>
+        
         <div>
-            <form>
+            <form class="formulario">
+                <center>
+                <h3>Selecciones algun examen pendiente</h3>
                 <select name="selectCodeResult">
                 <%for (Result result : results) {
                     String codeResult = result.getCode();
                 %>
-                    <option><%=codeResult%></option>
+                <option><%=codeResult%></option>
                 <%}%>
                                     
                 </select>
                 <input type="hidden" value="<%=codeLabWorker%>" name="codeLabWorker">
                 <%if (results.size() > 0) {%>
-                <br><input type="submit" name="selectResult" value="Seleccionar resultado"/>       
+                <br><input type="submit" name="selectResult" value="Seleccionar resultado" class="boton"/>       
                 <%} else {%>
                 <p>No tienes trabajo por hacer</p>
-                <%}%>                                  
+                <%}%>   
+                </center>
             </form>
         </div>            
             <%if (request.getParameter("selectResult") != null) {
@@ -66,7 +70,9 @@
                     typeFileInform = "image/*";
                 }                
                 %>
-                <form method="post" enctype="multipart/form-data" action="/proyecto2/setResultServlet">
+                <form method="post" enctype="multipart/form-data" action="/proyecto2/setResultServlet" class="formulario3">
+                    <div class="contenedor">
+                        <div>
                 <h4>Codigo de Paciente</h4>
                 <%=codePatient%>
                 <h4>Codigo de Medico</h4>
@@ -75,18 +81,28 @@
                 <%=nameExam%>
                 <h4>Codigo de Laboratorista</h4>
                 <%=codeLabWorker%>
+                </div>
+                    <div>
                 <h4>Fecha</h4>
                 <%=dateToday%>
                 <h4>Hora</h4>
                 <p>Automaticamente se guardara la hora en que se envie el formulario</p>
                 <h4>Informe</h4>
                 <p>Sube el archivo del informe (<%=reportType%>)</p>
-                <input type="file" name="fileInform" accept="<%=typeFileInform%>"><br><br>
+                <input type="file" name="fileInform" accept="<%=typeFileInform%>" class="boton"><br><br>
                 <input type="hidden" value="<%=codeLabWorker%>" name="codeLabWorker">
                 <input type="hidden" value="<%=codeResult%>" name="codeResult">
                 <input type="hidden" value="<%=dateToday%>" name="dateResult">
-                <input type="submit" name="finishExam" value="Terminar examen">
+                <input type="submit" name="finishExam" value="Terminar examen" class="boton">
+                </div>
+                </div>
                 </form>
             <%}%>
+    <form METHOD="POST" ACTION="/proyecto2/labWorkerGUI/principallabWorker.jsp">   
+            <center>
+                <input type="hidden" value="<%=codeLabWorker%>" name="username">
+                <br><br><input type="submit" value="Regresar" class="boton"/>
+            </center>
+        </form>
     </body>
 </html>

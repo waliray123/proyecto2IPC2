@@ -49,5 +49,11 @@
             %>
         </table>
         </center>
+        <form METHOD="POST" ACTION="/proyecto2/patientGUI/principalPatient.jsp">   
+            <center>
+                <input type="hidden" value="<%=codePatient%>" name="username">
+                <br><br><input type="submit" value="Regresar" class="boton"/>
+            </center>
+        </form>
     </body>
 </html>

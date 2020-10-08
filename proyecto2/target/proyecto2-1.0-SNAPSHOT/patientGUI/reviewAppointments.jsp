@@ -28,8 +28,10 @@
         <title>Ver citas y consultas</title>
     </head>
     <body>
+        <center>
         <h1>Ver mis Citas Y Examenes Pendientes</h1>
         <h3>Citas Pendientes</h3>
+        <div class="formulario3">
         <table class = "table">
             <tr>
                 <th>Codigo</th>
@@ -51,15 +53,15 @@
             <%    }                
             %>
         </table>
+        </div>
         <h3>Examenes Pendientes</h3>
+        <div class="formulario3">
         <table class = "table">
             <tr>
                 <th>Codigo</th>
                 <th>Codigo Paciente</th>
                 <th>Nombre Medico</th>
-                <th>Especialidad</th>                
-                <th>Fecha</th>
-                <th>Hora</th>
+                <th>Especialidad</th>
             </tr>
             <%for (Result exam : results) {%>
             <tr>
@@ -71,5 +73,13 @@
             <%    }                
             %>
         </table>
+        </div>
+        </center>
+        <form METHOD="POST" ACTION="/proyecto2/patientGUI/principalPatient.jsp">   
+            <center>
+                <input type="hidden" value="<%=codePatient%>" name="username">
+                <br><br><input type="submit" value="Regresar" class="boton"/>
+            </center>
+        </form>
     </body>
 </html>

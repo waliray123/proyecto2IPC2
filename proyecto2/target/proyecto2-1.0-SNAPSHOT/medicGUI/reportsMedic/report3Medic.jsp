@@ -20,6 +20,7 @@
         <title>Reporte 3</title>
     </head>
     <body>
+        <center>
         <h1>Los pacientes con mayor cantidad de informes médicos dentro de un intervalo de tiempo.</h1>
         <form>
             <p>Fecha de inicio</p>
@@ -53,5 +54,12 @@
         </table>
         <%    }
         %>
+        </center>
+        <form METHOD="POST" ACTION="/proyecto2/medicGUI/principalMedic.jsp">   
+            <center>
+                <input type="hidden" value="<%=codeMedic%>" name="username">
+                <br><br><input type="submit" value="Regresar" class="boton"/>
+            </center>
+        </form>
     </body>
 </html>

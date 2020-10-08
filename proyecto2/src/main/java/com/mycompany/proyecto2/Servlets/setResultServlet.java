@@ -65,6 +65,7 @@ public class setResultServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String codeLabWorker1 = "";
         if (!ServletFileUpload.isMultipartContent(request)) {
 		    PrintWriter writer = response.getWriter();
 		    writer.println("Error: enctype=multipart/form-data");
@@ -106,6 +107,7 @@ public class setResultServlet extends HttpServlet {
                         String fieldValue = item.getString();
                         if (fieldName.equals("codeLabWorker")) {
                             codeLabWorker = fieldValue;
+                            codeLabWorker1=codeLabWorker;
                         }else if (fieldName.equals("codeResult")) {
                             codeResult = fieldValue;
                         }
@@ -114,11 +116,14 @@ public class setResultServlet extends HttpServlet {
                 //Enviar a guardar
                 LabWorkerDB labDB = new LabWorkerDB();
                 labDB.updateResult(codeLabWorker, storeFile, dateToday, time, codeResult);
+                JOptionPane.showMessageDialog(null,"Se guardo con exito");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null,ex);
-        }
-        getServletContext().getRequestDispatcher("/patientGUI/message.jsp").forward(request, response);
+        }      
+        request.setAttribute("username", codeLabWorker1);
+        
+        request.getRequestDispatcher("/labWorkerGUI/principallabWorker.jsp").forward(request, response);
     }
 
     /**
