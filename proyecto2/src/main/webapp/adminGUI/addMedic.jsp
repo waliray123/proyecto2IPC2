@@ -1,4 +1,6 @@
 
+<%@page import="com.mycompany.proyecto2.Utils.Medic"%>
+<%@page import="com.mycompany.proyecto2.PatientControlers.PatientControl"%>
 <%@page import="javax.swing.JOptionPane"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.mycompany.proyecto2.AdminControlers.AdminControl"%>
@@ -50,7 +52,45 @@
             </div>
             </div>
             <center><input type="submit" name="add" value="Agregar Medico" class="boton"/></center>
-        </form>
+        </form>        
+        <%PatientControl patientC = new PatientControl();
+            ArrayList<Medic> medics = patientC.getAllMedics();%>
+            <center>
+            <br><h3>Todos los medicos</h3><br>
+            <table class = "table">
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Colegiado</th>
+                <th>DPI</th>                
+                <th>Correo</th>
+                <th>Especialidades</th>
+                <th>Hora de entrada</th>
+                <th>Hora de salida</th>
+                <th>Fecha que inicio a trabajar </th>
+            </tr>
+            <%for (Medic medic : medics) {%>
+                <tr>
+                  <th><%=medic.getCode()%></th>  
+                  <th><%=medic.getName()%></th>  
+                  <th><%=medic.getCollegiate()%></th>  
+                  <th><%=medic.getDPI()%></th>  
+                  <th><%=medic.getMail()%></th>  
+                  <th>
+                      <%
+                          for (String specialty : medic.getSpecialties()) {%>
+                             <%=specialty%><br>     
+                      <%    }
+                      %>
+                  </th>  
+                  <th><%=medic.getInitTime()%></th>  
+                  <th><%=medic.getFinalTime()%></th>  
+                  <th><%=medic.getInitWork()%></th> 
+                </tr>
+            <%    }
+            %>
+        </table>
+        </center>
         <form>   
             <center>
                 <br><br><input type="button" value="Regresar" class="boton" onclick="location.href='principalAdmin.jsp'"/>
