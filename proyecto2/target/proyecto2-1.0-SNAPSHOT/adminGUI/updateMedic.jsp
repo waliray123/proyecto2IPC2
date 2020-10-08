@@ -90,8 +90,8 @@
     </form>          
     <%        }
         }
-    %>
-    <%PatientControl patientC = new PatientControl();
+    
+    PatientControl patientC = new PatientControl();
             ArrayList<Medic> medics = patientC.getAllMedics();%>
             <center>
             <br><h3>Todos los medicos</h3><br>

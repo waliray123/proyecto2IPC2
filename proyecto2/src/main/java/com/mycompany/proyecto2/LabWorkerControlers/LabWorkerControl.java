@@ -6,6 +6,7 @@
 package com.mycompany.proyecto2.LabWorkerControlers;
 
 import com.mycompany.proyecto2.AdminControlers.AdminDB;
+import com.mycompany.proyecto2.Utils.LabWorker;
 import com.mycompany.proyecto2.Utils.Result;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,8 +29,11 @@ public class LabWorkerControl {
     public ArrayList<Result> getPendingResultsByCodeLab(String codeLabWorker){
         ArrayList<Result> results = new ArrayList<Result>();
         boolean work = labWorkerWorkToday(codeLabWorker,getDayToday());
+        String examCode = "";
+        LabWorker labW = labWorkerDB.getLabWorkerByCode(codeLabWorker);
+        examCode = labW.getExamCode();
         if (work) {
-            results = labWorkerDB.getAllResultsPendings();
+            results = labWorkerDB.getAllResultsByExamCode(examCode);
         }
         return results;
     }

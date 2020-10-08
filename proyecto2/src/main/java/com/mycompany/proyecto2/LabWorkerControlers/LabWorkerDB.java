@@ -6,6 +6,7 @@
 package com.mycompany.proyecto2.LabWorkerControlers;
 
 import com.mycompany.proyecto2.DBControlers.ConnectionDB;
+import com.mycompany.proyecto2.Utils.LabWorker;
 import com.mycompany.proyecto2.Utils.Result;
 import java.io.File;
 import java.io.FileInputStream;
@@ -111,6 +112,56 @@ public class LabWorkerDB {
             
         }    
         return results;
+    }
+    
+    public ArrayList<Result> getAllResultsByExamCode(String examCode){
+        ArrayList<Result> results = new ArrayList<Result>();
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM (RESULT AS r) WHERE r.LAB_WORKER_code IS NULL AND EXAM_code = ?");
+            ps.setString(1, examCode);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);
+                Blob order_Result = res.getBlob(2);
+                Blob inform = res.getBlob(3);
+                String date = res.getString(4);
+                String time = res.getString(5);
+                String codeLabWorker = res.getString(6);
+                String codePatient2 = res.getString(7);
+                String codeMedic = res.getString(8);
+                String codeExam = res.getString(9);
+                Result tempResult = new Result(code,order_Result,inform,date,time,codeLabWorker,codePatient2,codeMedic,codeExam);
+                results.add(tempResult);               
+            }         
+            res.close();
+        } catch (Exception e) {
+            
+        }    
+        return results;
+    }
+    
+    public LabWorker getLabWorkerByCode(String codeLab){
+        LabWorker labW = null;
+        try {            
+            ps = connection.prepareStatement("SELECT * FROM LAB_WORKER WHERE code = ?");
+            ps.setString(1, codeLab);
+            ResultSet res = ps.executeQuery();            
+            while (res.next()){
+                String code = res.getString(1);                
+                String name = res.getString(2);
+                String registry = res.getString(3);
+                String DPI = res.getString(4);
+                String phone = res.getString(5);
+                String mail = res.getString(6);
+                String initWork = res.getString(7);
+                String codeExam = res.getString(9);        
+                labW = new LabWorker( code, name, registry, DPI, phone, mail,initWork, codeExam);
+            }         
+            res.close();
+        } catch (Exception e) {
+            
+        } 
+        return labW;
     }
     
     public void updateResult(String codeLabWorker, File inform, String dateToday, String time ,String codeResult){
