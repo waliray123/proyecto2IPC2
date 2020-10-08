@@ -50,5 +50,10 @@
         </table>
         <%}%>
     </center>
+    <form>   
+            <center>
+                <br><br><input type="button" value="Regresar" class="boton" onclick="location.href='/proyecto2/adminGUI/principalAdmin.jsp'"/>
+            </center>
+        </form>
 </body>
 </html>

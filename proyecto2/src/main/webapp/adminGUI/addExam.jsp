@@ -8,31 +8,39 @@
 <%@page import="javax.swing.JOptionPane"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html>    
     <%AdminControl adminC = new AdminControl();%>
     <head>
+        <link href="/proyecto2/css/styles.css" rel="stylesheet"/> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Agregrar Examen</title>
     </head>
     <body>
         <h1>Agregar Examen</h1>
-        <form>
+        <form class="formulario3">
+            <center>
             <h2>Llene los siguientes campos para registrar el examen</h2>
             <h3>Codigo</h3>
             <input type="text" name="code" placeholder="000"/><br>
             <h3>Nombre del examen</h3>
             <input type="text" name="name" placeholder="Juan Perez"/><br><br>
-            <label><input type="checkbox" name="cbox" value="use_order"> Requiere orden Medica</label><br>
+            <label class="setFont"><input type="checkbox" name="cbox" value="use_order"> Requiere orden Medica</label><br>
             <h3>Descripcion</h3>
             <textarea name="description" rows="5" cols="30"></textarea><br>
             <h3>Cost</h3>
             <input type="text" name="cost" /><br><br>  
-            <fieldset>
+            <fieldset class="formulario2">
                 <legend>Tipo de informe</legend>                
-                <label><input type="radio" name="input" value="IMG" checked/> Imagen</label><br>
-                <label><input type="radio" name="input" value="PDF" /> PDF</label><br>                                              
+                <label class="setFont"><input type="radio" name="input" value="IMG" checked/> Imagen</label><br>
+                <label class="setFont"><input type="radio" name="input" value="PDF" /> PDF</label><br>                                              
             </fieldset>
-            <input type="submit" name="add" value="Agregar Examen" />
+            <input type="submit" name="add" value="Agregar Examen" class="boton"/>
+            </center>
+        </form>
+        <form>   
+            <center>
+                <br><br><input type="button" value="Regresar" class="boton" onclick="location.href='principalAdmin.jsp'"/>
+            </center>
         </form>
     </body>
     <%if (request.getParameter("add") != null) {

@@ -15,7 +15,6 @@ com/mycompany/proyecto2/DBControlers/ConnectionDB.class
 com/mycompany/proyecto2/Servlets/sheduleResult.class
 com/mycompany/proyecto2/AdminControlers/AdminDB.class
 com/mycompany/proyecto2/LabWorkerControlers/LabWorkerControl.class
-com/mycompany/proyecto2/AdminControlers/AdminReportsControl.class
 com/mycompany/proyecto2/Utils/DateQuantity.class
 com/mycompany/proyecto2/MedicControlers/MedicControl.class
 com/mycompany/proyecto2/AdminControlers/AdminControl.class

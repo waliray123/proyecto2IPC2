@@ -14,15 +14,16 @@
 <html>
     <%AdminControl adminC = new AdminControl();%>
     <head>
+        <link href="/proyecto2/css/styles.css" rel="stylesheet"/>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Actualizar Laboratorista</title>
     </head>
     <body>
-        <h1>Actualizar Laboratorista</h1>
-        <form>
+        <center><h1>Actualizar Laboratorista</h1></center>
+        <form class="formulario">
             <p>Ingrese el codigo del Laboratorista</p>
             <input type="text" name="codeLab">
-            <input type="submit" name="searchCode">            
+            <input type="submit" name="searchCode" class="boton">            
         </form>
         <%if (request.getParameter("searchCode") != null) {
             AdminDB adminDB = new AdminDB();
@@ -57,22 +58,29 @@
                 }
             }
         %>
-        <form>
-            <h2>Llene los siguientes campos para actualizar el laboratorista</h2>
+        <center><h2>Llene los siguientes campos para actualizar el laboratorista</h2></center>
+        <form class="formulario3">
+            <div class="contenedor">
+            <div>
+            
             <h3>Codigo</h3>
             <p><%=labW.getCode()%></p>            
             <h3>Nombre</h3>
             <input type="text" name="name" value="<%=labW.getName()%>"/><br>
             <h3>Numero de Registro</h3>
             <input type="text" name="registry" value="<%=labW.getRegistry()%>"/><br>
+            </div>
+            <div>
             <h3>DPI</h3>
-            <input type="text" name="DPI" value="<%=labW.getDPI()%>"/><br>
+            <input type="text" name="DPI" value="<%=labW.getDPI()%>"/><br>            
             <h3>Telefono</h3>
             <input type="text" name="phone" value="<%=labW.getPhone()%>"/><br>                
             <h3>Correo Electronico</h3>
             <input type="text" name="email" value="<%=labW.getMail()%>"/><br>
             <h3>Fecha en la que inicio a trabajar</h3>
-            <input type="date" name="initDate" value="<%=labW.getInitWork()%>"/><br>          
+            <input type="date" name="initDate" value="<%=labW.getInitWork()%>"/><br>    
+            </div>
+            <div>
             <h3>Dias que trabaja</h3>
             <label><input type="checkbox" name="cbox" value="Lunes" <%=checkedL%>> Lunes</label><br>                       
             <label><input type="checkbox" name="cbox" value="Martes" <%=checkedMa%>> Martes</label><br>                       
@@ -86,9 +94,11 @@
                 <%for (String exam : exams) {%>                    
                 <option><%=exam%></option>>                    
                 <%}%>
-            </select><br>   
+            </select><br> 
+            </div>
+            </div>            
             <input type="hidden" name="codeLab" value="<%=codeLabWorker%>" />
-            <input type="submit" name="updateLab" value="Agregar Laboratorista" />
+            <input type="submit" name="updateLab" value="Agregar Laboratorista" class="boton"/>
         </form>
         <% }   }
         %>
@@ -108,5 +118,10 @@
         }
       }
     %>
+        <form>   
+            <center>
+                <br><br><input type="button" value="Regresar" class="boton" onclick="location.href='principalAdmin.jsp'"/>
+            </center>
+        </form>
     </body>
 </html>

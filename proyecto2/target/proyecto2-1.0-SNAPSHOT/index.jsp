@@ -17,16 +17,17 @@
         }
     %>
     <head>
+        <link href="/proyecto2/css/styles.css" rel="stylesheet"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Principal jsp</title>
     </head>
     <body>
         <center>
-        <h1>Hospital</h1>
+        <h1 class="content_H1">Hospital</h1>
         <h2>Bienvenido a nuestra pagina web</h2>                
-        <button onclick="location.href='Login.jsp'">Ingresar</button>
+        <button onclick="location.href='Login.jsp'"  class="boton">Ingresar</button>
         <h3>Registrarse como paciente</h3>
-        <input type="button" value="Registrarse" onclick="location.href='registerNewPatient.jsp'">
+        <input type="button" value="Registrarse" onclick="location.href='registerNewPatient.jsp'" class="boton">
         </center>
     </body>
 </html>
